@@ -4,12 +4,12 @@
 	<modelVersion>4.0.0</modelVersion>
 
 	<groupId>com.lohika.jclub</groupId>
-	<artifactId>configserver</artifactId>
+	<artifactId>config-server</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<packaging>jar</packaging>
 
-	<name>configserver</name>
-	<description>Demo project for Spring Boot</description>
+	<name>Configuration server</name>
+	<description>Configuration server</description>
 
 	<parent>
 		<groupId>org.springframework.boot</groupId>
