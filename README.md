@@ -30,15 +30,15 @@ mvn clean install
 
 ```
 ## TODO Items
-[] Storage Service (persistance + eurika client)
-[] Rieltor Service
-[] All eurika clients add eurika server address to properties
-[] Client service for search
-[] Zuul like a proxy API gateway
-[] Cloud foundary
-[] FeignClient usage
-[] Circuit Breaker: Hystrix Clients
-[] Connect Zipkin
-[] Event Driven with JMS or Kafka
-[] Create parser for Visokiy Zamok data
-[] Security check to implement with Zuul only
+- [ ] Storage Service (persistance + eurika client)
+- [ ] Rieltor Service
+- [ ] All eurika clients add eurika server address to properties
+- [ ] Client service for search
+- [ ] Zuul like a proxy API gateway
+- [ ] Cloud foundary
+- [ ] FeignClient usage
+- [ ] Circuit Breaker: Hystrix Clients
+- [ ] Connect Zipkin
+- [ ] Event Driven with JMS or Kafka
+- [ ] Create parser for Visokiy Zamok data
+- [ ] Security check to implement with Zuul only
