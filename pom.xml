@@ -16,5 +16,6 @@
 		<module>discovery-server</module>
 		<module>rating-service</module>
 		<module>hackster-service</module>
+		<module>realtor-service</module>
 	</modules>
 </project>
