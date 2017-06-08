@@ -6,6 +6,7 @@ import lombok.*;
 @NoArgsConstructor
 @AllArgsConstructor
 @Data
+@ToString
 public class ApartmentRecord {
   @NonNull
   private String location;
