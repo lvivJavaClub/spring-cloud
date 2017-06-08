@@ -2,10 +2,13 @@ package com.lohika.jclub;
 
 import lombok.*;
 
-@Builder
+import javax.persistence.Entity;
+import javax.persistence.Id;
+
 @NoArgsConstructor
 @AllArgsConstructor
 @Data
+@Entity
 public class ApartmentRecord {
   @NonNull
   private String location;
@@ -17,6 +20,6 @@ public class ApartmentRecord {
   private String phone;
   @NonNull
   private String realtorName;
-  @NonNull
+  @Id
   private String mail;
 }

@@ -21,12 +21,24 @@ public class RealtorController {
     @Autowired
     private RestTemplate restTemplate;
 
+    @Autowired
+    private RealtorService realtorService;
+
     @PostMapping("/apartments")
     public void addApartment(@RequestBody ApartmentRecord apartmentRecord) {
         ResponseEntity<Boolean> isHackster =
                 restTemplate.exchange("http://hackster-service/hackster/{phone}",
                         HttpMethod.GET, null, Boolean.class, apartmentRecord.getPhone());
         log.info("Is hackster " + isHackster);
+    }
+
+    @PostMapping("/storeApartments")
+    public void storeApartment(@RequestBody ApartmentRecord apartmentRecord) {
+        realtorService.storeApartment(apartmentRecord);
+        /*ApartmentRecordClient apartmentRecordClient = Feign.builder().encoder(new JacksonEncoder())
+                .decoder(new JacksonDecoder()).target(ApartmentRecordClient.class, "http://storage-service");
+        apartmentRecordClient.storeApartment(apartmentRecord);*/
+        log.info("Stored");
     }
 
     @RequestMapping("/service-instances/{applicationName}")
