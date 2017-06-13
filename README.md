@@ -30,13 +30,13 @@ mvn clean install
 
 ```
 ## TODO Items
-- [ ] Storage Service (persistance + eurika client)
-- [ ] Rieltor Service
-- [ ] All eurika clients add eurika server address to properties
+- [x] Storage Service (persistance + eurika client)
+- [x] Rieltor Service
+- [x] All eurika clients add eurika server address to properties
 - [ ] Client service for search
 - [ ] Zuul like a proxy API gateway
 - [ ] Cloud foundary
-- [ ] FeignClient usage
+- [x] FeignClient usage
 - [ ] Circuit Breaker: Hystrix Clients
 - [ ] Connect Zipkin
 - [ ] Event Driven with JMS or Kafka
