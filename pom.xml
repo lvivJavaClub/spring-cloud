@@ -17,6 +17,7 @@
 		<module>rating-service</module>
 		<module>hackster-service</module>
 		<module>realtor-service</module>
-		<module>storage-service</module>>
+		<module>storage-service</module>
+		<module>storage-service-client</module>
 	</modules>
 </project>

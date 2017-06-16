@@ -1,8 +1,10 @@
-package com.lohika.jclub;
+package com.lohika.jclub.storage;
 
 import lombok.*;
 
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
 @NoArgsConstructor
@@ -10,6 +12,9 @@ import javax.persistence.Id;
 @Data
 @Entity
 public class ApartmentRecord {
+  @Id
+  @GeneratedValue(strategy = GenerationType.AUTO)
+  private String id;
   @NonNull
   private String location;
   @NonNull
@@ -20,6 +25,6 @@ public class ApartmentRecord {
   private String phone;
   @NonNull
   private String realtorName;
-  @Id
+  @NonNull
   private String mail;
 }
