@@ -1,4 +1,4 @@
-package com.lohika.jclub;
+package com.lohika.jclub.realtor;
 
 import lombok.*;
 
