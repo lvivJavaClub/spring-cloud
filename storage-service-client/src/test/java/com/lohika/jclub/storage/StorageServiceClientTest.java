@@ -1,17 +1,18 @@
 package com.lohika.jclub.storage;
 
-import com.github.dockerjava.api.command.CreateContainerCmd;
-
 import org.junit.ClassRule;
-import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.boot.test.util.EnvironmentTestUtils;
+import org.springframework.context.ApplicationContextInitializer;
+import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.hateoas.PagedResources;
+import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.testcontainers.containers.GenericContainer;
-import org.testcontainers.containers.wait.Wait;
+import org.testcontainers.containers.wait.LogMessageWaitStrategy;
 
 import static org.hamcrest.Matchers.hasItem;
 import static org.hamcrest.Matchers.is;
@@ -19,19 +20,15 @@ import static org.hamcrest.Matchers.notNullValue;
 import static org.hamcrest.Matchers.nullValue;
 import static org.junit.Assert.assertThat;
 
-@Ignore
 @RunWith(SpringRunner.class)
 @SpringBootTest(classes = StorageServiceClientTestApplication.class)
+@ContextConfiguration(initializers = StorageServiceClientTest.Initializer.class)
 public class StorageServiceClientTest {
 
   @ClassRule
   public static GenericContainer storageService = new GenericContainer("storage-service:latest")
       .withExposedPorts(8091)
-      .withCreateContainerCmdModifier(
-          cmd -> ((CreateContainerCmd) cmd)
-              .withPublishAllPorts(true)
-              .withName("storage-service"))
-      .waitingFor(Wait.forListeningPort());
+      .waitingFor(new LogMessageWaitStrategy().withRegEx(".*Started StorageServiceApplication in.*\\s"));
 
   @Autowired
   private StorageServiceClient storageServiceClient;
@@ -107,5 +104,16 @@ public class StorageServiceClientTest {
 
     Apartment actual = storageServiceClient.get(created.getId());
     assertThat(actual, nullValue());
+  }
+
+  public static class Initializer implements ApplicationContextInitializer<ConfigurableApplicationContext> {
+    @Override
+    public void initialize(ConfigurableApplicationContext configurableApplicationContext) {
+
+      EnvironmentTestUtils.addEnvironment("testcontainers", configurableApplicationContext.getEnvironment(),
+          "storage-service.ribbon.servers=http://" + storageService.getContainerIpAddress() + ":"
+          + storageService.getMappedPort(8091) + "/"
+      );
+    }
   }
 }
