@@ -30,17 +30,35 @@ public class RealtorServiceApplicationTests {
 	}
 
 	@Test
-	@Ignore
 	public void apartments() throws Exception {
 		ApartmentRecord apartmentRecord = ApartmentRecord.builder()
 				.phone("123")
 				.realtorName("Anna Realtor")
+				.mail("test@gmail.com")
 				.sqft(44)
 				.price(100)
 				.location("Lviv").build();
 
 		mockMvc.perform(MockMvcRequestBuilders
 				.post("/apartments")
+				.contentType(MediaType.APPLICATION_JSON)
+				.content(new ObjectMapper().writeValueAsBytes(apartmentRecord)))
+				.andDo(MockMvcResultHandlers.print())
+				.andExpect(status().isOk());
+	}
+
+	@Test
+	public void storeApartment() throws Exception {
+		ApartmentRecord apartmentRecord = ApartmentRecord.builder()
+				.phone("123")
+				.realtorName("Anna Realtor")
+				.mail("test@gmail.com")
+				.sqft(44)
+				.price(100)
+				.location("Lviv").build();
+
+		mockMvc.perform(MockMvcRequestBuilders
+				.post("/storeApartments")
 				.contentType(MediaType.APPLICATION_JSON)
 				.content(new ObjectMapper().writeValueAsBytes(apartmentRecord)))
 				.andDo(MockMvcResultHandlers.print())
