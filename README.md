@@ -26,11 +26,15 @@ Sandbox to play with spring cloud features
 mvn clean install
 ```
 
+**Notice** : if you have issues with test containers (docker images) then check if you have `DOCKER_HOST` environment variable.
+If no then add it using this : `export DOCKER_HOST=unix:///var/run/docker.sock` (example for *Docker For Mac*)
+
 ## Run
 
 ```bash
 
 ```
+
 ## TODO Items
 - [ ] Check Feign Fallback ?
 - [x] Storage Service (persistance + eurika client)
