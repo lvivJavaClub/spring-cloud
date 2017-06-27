@@ -1,0 +1,9 @@
+zuul:
+  prefix: /api
+
+  routes:
+    realtor:
+        path: /realtor-service/**
+        serviceId: realtor-service
+
+  ignored-services: '*'
