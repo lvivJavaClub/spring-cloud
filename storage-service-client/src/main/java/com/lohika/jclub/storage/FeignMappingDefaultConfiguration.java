@@ -1,4 +1,4 @@
-package com.lohika.jclub.realtor;
+package com.lohika.jclub.storage;
 
 import feign.Feign;
 

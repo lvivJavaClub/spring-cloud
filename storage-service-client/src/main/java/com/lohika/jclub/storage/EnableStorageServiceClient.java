@@ -2,6 +2,7 @@ package com.lohika.jclub.storage;
 
 import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
 import org.springframework.cloud.netflix.feign.EnableFeignClients;
+import org.springframework.context.annotation.Import;
 import org.springframework.hateoas.config.EnableHypermediaSupport;
 
 import java.lang.annotation.Documented;
@@ -15,7 +16,8 @@ import java.lang.annotation.Target;
 @Documented
 
 @EnableHypermediaSupport(type = EnableHypermediaSupport.HypermediaType.HAL)
-@EnableFeignClients(clients = StorageServiceClient.class)
+@EnableFeignClients(clients = {StorageServiceClient.class})
+@Import({FeignMappingDefaultConfiguration.class, StorageServiceClientConfiguration.class})
 @EnableDiscoveryClient
 public @interface EnableStorageServiceClient {
 }

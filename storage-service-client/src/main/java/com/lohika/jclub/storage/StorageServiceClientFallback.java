@@ -4,13 +4,15 @@ import lombok.extern.slf4j.Slf4j;
 
 import org.springframework.hateoas.PagedResources;
 
+import static java.util.Collections.emptyList;
+
 @Slf4j
 public class StorageServiceClientFallback implements StorageServiceClient {
 
   @Override
   public PagedResources<Apartment> list() {
     log.error("Can not get list");
-    return null;
+    return new PagedResources<>(emptyList(), new PagedResources.PageMetadata(0, 0, 0));
   }
 
   @Override

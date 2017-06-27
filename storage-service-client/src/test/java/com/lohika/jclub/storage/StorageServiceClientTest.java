@@ -33,6 +33,9 @@ public class StorageServiceClientTest {
   @Autowired
   private StorageServiceClient storageServiceClient;
 
+  @Autowired
+  private StorageServiceClientFallback storageServiceClientFallback;
+
   private Apartment apartment = Apartment.builder()
       .location("location")
       .mail("mail")
