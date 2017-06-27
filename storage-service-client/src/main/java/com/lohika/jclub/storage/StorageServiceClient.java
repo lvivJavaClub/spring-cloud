@@ -11,6 +11,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 @FeignClient(
     value = "storage-service",
+    /*
+     * Used only for tests? ribbon.servers is used usually to use configured list of servers without eureka,
+     * but we use eureka discovery, value with service name is enough, checked without next url row, it works.
+     */
     url = "${storage-service.ribbon.servers:}",
     decode404 = true,
     fallback = StorageServiceClientFallback.class)
