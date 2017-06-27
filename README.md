@@ -16,6 +16,7 @@ Sandbox to play with spring cloud features
 | Hackster service| Hackster Detection Service | 8082| |
 | Realtor service| Realtor Api Service | 8080| To call other services used Feign, RestTemplate |
 | Storage service| Storage of Apartment Records Service | 8091| H2 based service for ApartmentRecord data storage. |
+| API gateway service| Zull API Gateway Service | 8090| |
 
 
 # Dev
@@ -41,7 +42,7 @@ If no then add it using this : `export DOCKER_HOST=unix:///var/run/docker.sock` 
 - [x] Rieltor Service
 - [x] All eurika clients add eurika server address to properties
 - [ ] Client service for search
-- [ ] Zuul like a proxy API gateway
+- [x] Zuul like a proxy API gateway
 - [ ] Cloud foundary
 - [x] FeignClient usage
 - [ ] Circuit Breaker: Hystrix Clients
