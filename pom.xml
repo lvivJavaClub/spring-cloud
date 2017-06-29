@@ -20,5 +20,6 @@
 		<module>storage-service</module>
 		<module>storage-service-client</module>
 		<module>api-gateway-service</module>
+		<module>zipkin-server</module>
 	</modules>
 </project>
