@@ -1,4 +1,4 @@
-package com.lohika.jclub.storage;
+package com.lohika.jclub.storage.client;
 
 import org.springframework.cloud.netflix.feign.FeignClient;
 import org.springframework.hateoas.PagedResources;

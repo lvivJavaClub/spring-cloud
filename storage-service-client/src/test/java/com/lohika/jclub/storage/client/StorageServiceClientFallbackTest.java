@@ -1,14 +1,11 @@
-package com.lohika.jclub.storage;
+package com.lohika.jclub.storage.client;
 
-import org.junit.ClassRule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.hateoas.PagedResources;
 import org.springframework.test.context.junit4.SpringRunner;
-import org.testcontainers.containers.GenericContainer;
-import org.testcontainers.containers.wait.LogMessageWaitStrategy;
 
 import static org.hamcrest.Matchers.hasSize;
 import static org.hamcrest.Matchers.notNullValue;
@@ -19,16 +16,8 @@ import static org.junit.Assert.assertThat;
 @SpringBootTest(classes = StorageServiceClientTestApplication.class)
 public class StorageServiceClientFallbackTest {
 
-  @ClassRule
-  public static GenericContainer storageService = new GenericContainer("storage-service:latest")
-      .withExposedPorts(8091)
-      .waitingFor(new LogMessageWaitStrategy().withRegEx(".*Started StorageServiceApplication in.*\\s"));
-
   @Autowired
   private StorageServiceClient storageServiceClient;
-
-  @Autowired
-  private StorageServiceClientFallback storageServiceClientFallback;
 
   private Apartment apartment = Apartment.builder()
       .location("location")

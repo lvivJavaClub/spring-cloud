@@ -1,4 +1,4 @@
-package com.lohika.jclub.storage;
+package com.lohika.jclub.storage.client;
 
 import org.junit.ClassRule;
 import org.junit.Test;
@@ -32,9 +32,6 @@ public class StorageServiceClientTest {
 
   @Autowired
   private StorageServiceClient storageServiceClient;
-
-  @Autowired
-  private StorageServiceClientFallback storageServiceClientFallback;
 
   private Apartment apartment = Apartment.builder()
       .location("location")
