@@ -21,14 +21,19 @@ Sandbox to play with spring cloud features
 
 # Dev
 
+## Before
+
+- Set up **JAVA_CLUB_SRC_HOME** environment variable that point to folder with project `spring-cloud`
+
+- If you have issues with test containers (docker images) then check if you have `DOCKER_HOST` environment variable.
+If no then add it using this : `export DOCKER_HOST=unix:///var/run/docker.sock` (example for *Docker For Mac*)
+
+
 ## Build
 
 ```bash
 mvn clean install
 ```
-
-**Notice** : if you have issues with test containers (docker images) then check if you have `DOCKER_HOST` environment variable.
-If no then add it using this : `export DOCKER_HOST=unix:///var/run/docker.sock` (example for *Docker For Mac*)
 
 ## Run
 
