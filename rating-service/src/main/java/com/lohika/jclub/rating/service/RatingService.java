@@ -7,11 +7,18 @@ import java.math.BigDecimal;
 import java.math.MathContext;
 import java.math.RoundingMode;
 
+import javax.annotation.PostConstruct;
+
 @Service
 public class RatingService {
 
   @Value("${rate}")
   private int rate;
+
+  @PostConstruct
+  public void test () {
+    System.out.println(rate);
+  }
 
   public BigDecimal calculateRating(Apartment apartment) {
     return new BigDecimal(
