@@ -1,4 +1,4 @@
-package com.lohika.jclub.storage;
+package com.lohika.jclub.storage.client;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;

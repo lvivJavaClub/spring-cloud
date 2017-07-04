@@ -1,7 +1,7 @@
 package com.lohika.jclub.realtor;
 
 
-import com.lohika.jclub.storage.EnableStorageServiceClient;
+import com.lohika.jclub.storage.client.EnableStorageServiceClient;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;

@@ -1,4 +1,4 @@
-package com.lohika.jclub.storage;
+package com.lohika.jclub.storage.client;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;

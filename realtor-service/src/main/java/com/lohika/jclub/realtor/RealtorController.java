@@ -2,8 +2,8 @@ package com.lohika.jclub.realtor;
 
 import lombok.extern.slf4j.Slf4j;
 
-import com.lohika.jclub.storage.Apartment;
-import com.lohika.jclub.storage.StorageServiceClient;
+import com.lohika.jclub.storage.client.Apartment;
+import com.lohika.jclub.storage.client.StorageServiceClient;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cloud.client.ServiceInstance;

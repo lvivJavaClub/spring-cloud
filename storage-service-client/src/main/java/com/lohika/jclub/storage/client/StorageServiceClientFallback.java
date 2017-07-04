@@ -1,4 +1,4 @@
-package com.lohika.jclub.storage;
+package com.lohika.jclub.storage.client;
 
 import lombok.extern.slf4j.Slf4j;
 

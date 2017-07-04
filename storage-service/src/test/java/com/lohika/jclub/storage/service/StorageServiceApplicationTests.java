@@ -1,4 +1,4 @@
-package com.lohika.jclub.storage;
+package com.lohika.jclub.storage.service;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
