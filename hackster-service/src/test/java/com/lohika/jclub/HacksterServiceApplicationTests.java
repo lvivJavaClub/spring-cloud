@@ -25,7 +25,7 @@ public class HacksterServiceApplicationTests {
   private MockMvc mockMvc;
 
   @Test
-  public void checkIfNewPhoneNumberIsNotHakster() throws Exception {
+  public void testIfNewPhoneNumberIsNotHakster() throws Exception {
     mockMvc.perform(get("/hackster/123123123"))
         .andDo(MockMvcResultHandlers.print())
         .andExpect(status().isOk())
@@ -33,7 +33,7 @@ public class HacksterServiceApplicationTests {
   }
 
   @Test
-  public void checkIfOldPhoneNumberIsNotHakster() throws Exception {
+  public void testIfPhoneNumberBecomeAHakster() throws Exception {
     mockMvc.perform(get("/hackster/321321"))
         .andDo(MockMvcResultHandlers.print())
         .andExpect(status().isOk())

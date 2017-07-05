@@ -32,14 +32,14 @@ public class HacksterServiceClientTest {
   private HacksterServiceClient hacksterServiceClient;
 
   @Test
-  public void checkIfNewNumberIsNotHackster() {
+  public void testIfNewNumberIsNotHackster() {
     boolean isHackster = hacksterServiceClient.isHackster("123123123");
 
     assertThat(isHackster, equalTo(false));
   }
 
   @Test
-  public void checkIfOldNumberIsNotHackster() {
+  public void testIfNumberBecomeAHackster() {
     boolean isHacksterFalse = hacksterServiceClient.isHackster("321321312");
 
     for (int i = 0; i < 5; i++) {
