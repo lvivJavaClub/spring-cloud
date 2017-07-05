@@ -15,11 +15,6 @@ public class RatingService {
   @Value("${rate}")
   private int rate;
 
-  @PostConstruct
-  public void test () {
-    System.out.println(rate);
-  }
-
   public BigDecimal calculateRating(Apartment apartment) {
     return new BigDecimal(
         (apartment.getSqft() / apartment.getPrice()) * rate,
