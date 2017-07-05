@@ -6,9 +6,6 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.NonNull;
 
-/**
- * @author Andriy Levchenko
- */
 @Data
 @Builder
 @AllArgsConstructor

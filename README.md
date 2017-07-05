@@ -38,9 +38,9 @@ If no then add it using this : `export DOCKER_HOST=unix:///var/run/docker.sock` 
 
 ## TODO Items
 - [ ] Check Feign Fallback ?
-- [x] Storage Service (persistance + eurika client)
+- [x] Storage Service (persistance + Eureka client)
 - [x] Rieltor Service
-- [x] All eurika clients add eurika server address to properties
+- [x] All Eureka clients add Eureka server address to properties
 - [ ] Client service for search
 - [x] Zuul like a proxy API gateway
 - [ ] Cloud foundary
