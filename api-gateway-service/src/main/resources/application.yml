@@ -5,5 +5,8 @@ zuul:
     realtor:
         path: /realtor-service/**
         serviceId: realtor-service
+    client:
+        path: /client-service/**
+        serviceId: client-service
 
   ignored-services: '*'

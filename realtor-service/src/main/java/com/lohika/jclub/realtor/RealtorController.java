@@ -16,7 +16,7 @@ import org.springframework.web.client.RestTemplate;
 import java.util.List;
 
 @Slf4j
-@RestController()
+@RestController
 public class RealtorController {
 
     @Autowired
