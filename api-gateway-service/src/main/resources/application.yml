@@ -8,5 +8,4 @@ zuul:
     client:
         path: /client-service/**
         serviceId: client-service
-
   ignored-services: '*'
