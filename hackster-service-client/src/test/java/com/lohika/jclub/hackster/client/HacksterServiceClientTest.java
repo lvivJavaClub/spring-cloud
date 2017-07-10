@@ -14,18 +14,18 @@ import org.testcontainers.containers.GenericContainer;
 import org.testcontainers.containers.wait.LogMessageWaitStrategy;
 
 import static org.hamcrest.Matchers.equalTo;
-import static org.hamcrest.Matchers.notNullValue;
 import static org.junit.Assert.assertThat;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest(classes = HacksterServiceClientTestApplication.class)
 @ContextConfiguration(initializers = HacksterServiceClientTest.Initializer.class)
 public class HacksterServiceClientTest {
+  private static final int MAX_ALLOWED_APARTMENTS_PER_REALTOR = 4;
 
   @ClassRule
   public static GenericContainer HacksterService = new GenericContainer("hackster-service:latest")
       .withExposedPorts(8082)
-      .withEnv("maxAllowedApartmentsPerRealtor", "4")
+      .withEnv("maxAllowedApartmentsPerRealtor", Integer.toString(MAX_ALLOWED_APARTMENTS_PER_REALTOR))
       .waitingFor(new LogMessageWaitStrategy().withRegEx(".*Started HacksterServiceApplication in.*\\s"));
 
   @Autowired
@@ -40,15 +40,12 @@ public class HacksterServiceClientTest {
 
   @Test
   public void testIfNumberBecomeAHackster() {
-    boolean isHacksterFalse = hacksterServiceClient.isHackster("321321312");
-
-    for (int i = 0; i < 5; i++) {
+    for (int i = 0; i < MAX_ALLOWED_APARTMENTS_PER_REALTOR; i++) {
       hacksterServiceClient.isHackster("321321312");
     }
 
     boolean isHacksterTrue = hacksterServiceClient.isHackster("321321312");
 
-    assertThat(isHacksterFalse, equalTo(false));
     assertThat(isHacksterTrue, equalTo(true));
   }
 
@@ -58,7 +55,7 @@ public class HacksterServiceClientTest {
 
       EnvironmentTestUtils.addEnvironment("testcontainers", configurableApplicationContext.getEnvironment(),
           "hackster-service.ribbon.servers=http://" + HacksterService.getContainerIpAddress() + ":"
-          + HacksterService.getMappedPort(8082) + "/"
+              + HacksterService.getMappedPort(8082) + "/"
       );
     }
   }
