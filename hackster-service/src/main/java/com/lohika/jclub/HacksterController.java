@@ -11,10 +11,16 @@ import org.springframework.web.bind.annotation.RestController;
 public class HacksterController {
 
   @Autowired
-  private HacksterRepository hacksterRepository;
+  private HacksterService hacksterService;
 
+  /**
+   * Check if current number correspond to hackster Rrealtor.
+   *
+   * @param phone Realtor phone number.
+   * @return Is current number correspond to hackster realtor.
+   */
   @GetMapping(path = "/{phone}")
   public boolean isHackster(@PathVariable(name = "phone") String phone) {
-    return hacksterRepository.findByPhone(phone).isPresent();
+    return hacksterService.isHackster(phone);
   }
 }

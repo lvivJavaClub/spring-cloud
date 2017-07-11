@@ -1,22 +1,26 @@
 package com.lohika.jclub;
 
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
-
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
 
 @Data
 @NoArgsConstructor
 @RequiredArgsConstructor
 @Entity
 public class Hackster {
-  @Id @GeneratedValue
+  @Id
+  @GeneratedValue
   private long id;
 
   @NonNull
   private String phone;
+
+  @NonNull
+  private int numberOfApartments;
 }
