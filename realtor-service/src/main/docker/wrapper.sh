@@ -8,8 +8,8 @@ if [ "$WATE" == "true" ]; then
         sleep 1
     done
 
-    echo "Trying to connect to config-server"
-    until $(curl --output /dev/null --silent --head --fail http://config-server:8888/info); do
+    echo "Trying to connect to storage-service"
+    until $(curl --output /dev/null --silent --head --fail http://storage-service:8091/info); do
         echo '.'
         sleep 1
     done
