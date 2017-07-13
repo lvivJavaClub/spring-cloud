@@ -1,7 +1,5 @@
 package com.lohika.jclub.storage.client;
 
-import org.springframework.hateoas.ResourceSupport;
-
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
