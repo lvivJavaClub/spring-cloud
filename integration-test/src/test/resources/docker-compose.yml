@@ -1,0 +1,114 @@
+version: "2"
+services:
+#
+  discovery-server:
+    image: discovery-server
+    ports:
+      - "8761:8761"
+#
+  config-server:
+    image: config-server
+    ports:
+      - "8888:8888"
+    links:
+      - discovery-server
+    environment:
+      - WATE=true
+      - JAVA_CLUB_SRC_HOME=https://github.com/lvivJavaClub
+      - eureka.client.serviceUrl.defaultZone=http://discovery-server:8761/eureka
+    depends_on:
+      - discovery-server
+#
+  storage-service:
+    image: storage-service
+    ports:
+      - "8091:8091"
+    links:
+      - discovery-server
+    environment:
+      - WATE=true
+      - eureka.client.serviceUrl.defaultZone=http://discovery-server:8761/eureka
+      - eureka.instance.preferIpAddress=true
+    depends_on:
+      - discovery-server
+#
+  rating-service:
+    image: rating-service
+    ports:
+      - "8081:8081"
+    links:
+      - discovery-server
+      - config-server
+    environment:
+      - WATE=true
+      - spring.cloud.config.uri=http://config-server:8888/
+      - eureka.client.serviceUrl.defaultZone=http://discovery-server:8761/eureka
+      - eureka.instance.preferIpAddress=true
+    depends_on:
+      - discovery-server
+      - config-server
+#
+  hackster-service:
+    image: hackster-service
+    ports:
+      - "8082:8082"
+    links:
+      - discovery-server
+      - config-server
+    environment:
+      - WATE=true
+      - spring.cloud.config.uri=http://config-server:8888/
+      - eureka.client.serviceUrl.defaultZone=http://discovery-server:8761/eureka
+      - eureka.instance.preferIpAddress=true
+    depends_on:
+      - discovery-server
+      - config-server
+#
+  realtor-service:
+    image: realtor-service
+    ports:
+      - "8080:8080"
+    links:
+      - discovery-server
+    environment:
+      - WATE=true
+      - eureka.client.serviceUrl.defaultZone=http://discovery-server:8761/eureka
+      - eureka.instance.preferIpAddress=true
+    depends_on:
+      - discovery-server
+      - rating-service
+      - hackster-service
+      - storage-service
+#
+  # client-server:
+  #   image: client-server
+  #   ports:
+  #     - "8083:8083"
+  #   links:
+  #    - discovery-server
+  #   environment:
+  #- WATE=true
+  #     eureka.host: discovery-server
+  #     eureka.instance.preferIpAddress: 'true'
+  #   depends_on:
+  #     - discovery-server
+  #     - storage-service
+#
+  api-gateway-service:
+    image: api-gateway-service
+    ports:
+      - "8090:8090"
+    links:
+      - discovery-server
+    environment:
+      - WATE=true
+      - eureka.client.serviceUrl.defaultZone=http://discovery-server:8761/eureka
+      - eureka.instance.preferIpAddress=true
+    depends_on:
+      - discovery-server
+      - realtor-service
+      # - client-server
+
+#networks:
+#  default:
+#    driver: spring-cloud-driver
