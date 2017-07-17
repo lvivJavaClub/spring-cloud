@@ -1,6 +1,6 @@
 #!/bin/bash
 
-if [ "$WATE" == "true" ]; then
+if [ "$WAITING_FOR_DEPENDENCE" == "true" ]; then
 
     echo "Trying to connect to discovery-server"
     until $(curl --output /dev/null --silent --head --fail http://discovery-server:8761/info); do

@@ -13,7 +13,7 @@ services:
     links:
       - discovery-server
     environment:
-      - WATE=true
+      - WAITING_FOR_DEPENDENCE=true
       - JAVA_CLUB_SRC_HOME=https://github.com/lvivJavaClub
       - eureka.client.serviceUrl.defaultZone=http://discovery-server:8761/eureka
     depends_on:
@@ -26,7 +26,7 @@ services:
     links:
       - discovery-server
     environment:
-      - WATE=true
+      - WAITING_FOR_DEPENDENCE=true
       - eureka.client.serviceUrl.defaultZone=http://discovery-server:8761/eureka
       - eureka.instance.preferIpAddress=true
     depends_on:
@@ -40,7 +40,7 @@ services:
       - discovery-server
       - config-server
     environment:
-      - WATE=true
+      - WAITING_FOR_DEPENDENCE=true
       - spring.cloud.config.uri=http://config-server:8888/
       - eureka.client.serviceUrl.defaultZone=http://discovery-server:8761/eureka
       - eureka.instance.preferIpAddress=true
@@ -56,7 +56,7 @@ services:
       - discovery-server
       - config-server
     environment:
-      - WATE=true
+      - WAITING_FOR_DEPENDENCE=true
       - spring.cloud.config.uri=http://config-server:8888/
       - eureka.client.serviceUrl.defaultZone=http://discovery-server:8761/eureka
       - eureka.instance.preferIpAddress=true
@@ -71,7 +71,7 @@ services:
     links:
       - discovery-server
     environment:
-      - WATE=true
+      - WAITING_FOR_DEPENDENCE=true
       - eureka.client.serviceUrl.defaultZone=http://discovery-server:8761/eureka
       - eureka.instance.preferIpAddress=true
     depends_on:
@@ -87,7 +87,7 @@ services:
   #   links:
   #    - discovery-server
   #   environment:
-  #- WATE=true
+  #- WAITING_FOR_DEPENDENCE=true
   #     eureka.host: discovery-server
   #     eureka.instance.preferIpAddress: 'true'
   #   depends_on:
@@ -101,7 +101,7 @@ services:
     links:
       - discovery-server
     environment:
-      - WATE=true
+      - WAITING_FOR_DEPENDENCE=true
       - eureka.client.serviceUrl.defaultZone=http://discovery-server:8761/eureka
       - eureka.instance.preferIpAddress=true
     depends_on:

@@ -27,11 +27,11 @@ public class EntToEndIntegrationTest {
   private static final String STORAGE_SERVICE = "storage-service_1";
   private static final int STORAGE_SERVICE_PORT = 8091;
 
-  private static final String compose = EntToEndIntegrationTest.class.getClassLoader()
+  private static final String COMPOSE = EntToEndIntegrationTest.class.getClassLoader()
       .getResource("./docker-compose.yml").getPath();
 
   @ClassRule
-  public static DockerComposeContainer environment = new DockerComposeContainer(new File(compose))
+  public static DockerComposeContainer environment = new DockerComposeContainer(new File(COMPOSE))
       .withExposedService(API_GATEWAY_SERVICE, API_GATEWAY_SERVICE_PORT)
       .withExposedService(STORAGE_SERVICE, STORAGE_SERVICE_PORT)
       .withPull(false);
