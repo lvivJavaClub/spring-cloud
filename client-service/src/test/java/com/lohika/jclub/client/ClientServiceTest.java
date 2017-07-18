@@ -1,12 +1,11 @@
 package com.lohika.jclub.client;
 
+import com.lohika.jclub.storage.client.Apartment;
 import com.lohika.jclub.storage.client.StorageServiceClient;
 
 import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
-import org.junit.rules.RuleChain;
-import org.junit.rules.TestRule;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
@@ -33,23 +32,15 @@ public class ClientServiceTest {
 
     @ClassRule
     public static GenericContainer discoveryService = new GenericContainer("discovery-service:latest")
-//            .waitingFor(new LogMessageWaitStrategy().withRegEx(".*Registered instance STORAGE-SERVICE.*\\s"))
             .waitingFor(new LogMessageWaitStrategy().withRegEx(".*Started EurekaServerApplication in.*\\s"))
             .withExposedPorts(8761);
 
     @Rule
     public GenericContainer storageService = new GenericContainer("storage-service:latest")
-//            .withStartupTimeout(Duration.ofSeconds(20))
             .withExposedPorts(8091)
             .withEnv("eureka.client.serviceUrl.defaultZone", "http://" + discoveryService.getContainerIpAddress() + ":" + discoveryService.getMappedPort(8761) + "/eureka")
             .withEnv("eureka.instance.preferIpAddress", "true")
-            .waitingFor(new LogMessageWaitStrategy().withRegEx(".*Started EurekaServerApplication in.*\\s"));
-//            .waitingFor(new LogMessageWaitStrategy().withRegEx(".*DiscoveryClient_STORAGE-SERVICE.*registration status: 204.*\\s"));
-
-//    @ClassRule
-//    public static TestRule chain = RuleChain
-//            .outerRule(discoveryService)
-//            .around(storageService);
+            .waitingFor(new LogMessageWaitStrategy().withRegEx(".*DiscoveryClient_STORAGE-SERVICE.*registration status: 204.*\\s"));
 
     @Autowired
     private StorageServiceClient storageServiceClient;
@@ -60,30 +51,32 @@ public class ClientServiceTest {
     public static class Initializer implements ApplicationContextInitializer<ConfigurableApplicationContext> {
         @Override
         public void initialize(ConfigurableApplicationContext configurableApplicationContext) {
-
-//            EnvironmentTestUtils.addEnvironment("testcontainers", configurableApplicationContext.getEnvironment(),
-//                    "storage-service.ribbon.servers=http://" + storageService.getContainerIpAddress() + ":"
-//                            + storageService.getMappedPort(8091) + "/"
-//            );
             EnvironmentTestUtils.addEnvironment("testcontainers", configurableApplicationContext.getEnvironment(),
                     "eureka.client.serviceUrl.defaultZone=http://" + discoveryService.getContainerIpAddress() +
-                            ":" + discoveryService.getMappedPort(8761) + "/eureka");
-
-
-            EnvironmentTestUtils.addEnvironment("testcontainers", configurableApplicationContext.getEnvironment(),
-                    "eureka.instance.preferIpAddress=true");
-
+                            ":" + discoveryService.getMappedPort(8761) + "/eureka",
+                    "storage-service.ribbon.servers=http://");
         }
     }
 
     @Test
     public void testGetApartments() throws Exception {
         // Given
+        Apartment lviv = storageServiceClient.create(
+                Apartment.builder()
+                        .location("LVIV")
+                        .mail("asfafs@asf.com")
+                        .phone("02510505001")
+                        .price(5225)
+                        .realtorName("Bariga")
+                        .sqft(55)
+                        .build());
 
         // When
         mockMvc.perform(MockMvcRequestBuilders.get("/apartments"))
                 .andDo(print());
 
         // Then
+        //TODO storageServiceClient does not creating the records.
+        // fallback is working with 0 paging
     }
 }
