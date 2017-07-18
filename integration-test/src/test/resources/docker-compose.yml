@@ -13,9 +13,10 @@ services:
     links:
       - discovery-server
     environment:
-      - WAITING_FOR_DEPENDENCE=true
       - JAVA_CLUB_SRC_HOME=https://github.com/lvivJavaClub
-      - eureka.client.serviceUrl.defaultZone=http://discovery-server:8761/eureka
+      - WAITING_FOR_DEPENDENCE=true
+      - DISCOVERY_SERVER_HOST=discovery-server
+      - DISCOVERY_SERVER_PORT=8761
     depends_on:
       - discovery-server
 #
@@ -27,8 +28,8 @@ services:
       - discovery-server
     environment:
       - WAITING_FOR_DEPENDENCE=true
-      - eureka.client.serviceUrl.defaultZone=http://discovery-server:8761/eureka
-      - eureka.instance.preferIpAddress=true
+      - DISCOVERY_SERVER_HOST=discovery-server
+      - DISCOVERY_SERVER_PORT=8761
     depends_on:
       - discovery-server
 #
@@ -41,9 +42,10 @@ services:
       - config-server
     environment:
       - WAITING_FOR_DEPENDENCE=true
-      - spring.cloud.config.uri=http://config-server:8888/
-      - eureka.client.serviceUrl.defaultZone=http://discovery-server:8761/eureka
-      - eureka.instance.preferIpAddress=true
+      - DISCOVERY_SERVER_HOST=discovery-server
+      - DISCOVERY_SERVER_PORT=8761
+      - CONFIG_SERVER_HOST=config-server
+      - CONFIG_SERVER_PORT=8888
     depends_on:
       - discovery-server
       - config-server
@@ -57,9 +59,10 @@ services:
       - config-server
     environment:
       - WAITING_FOR_DEPENDENCE=true
-      - spring.cloud.config.uri=http://config-server:8888/
-      - eureka.client.serviceUrl.defaultZone=http://discovery-server:8761/eureka
-      - eureka.instance.preferIpAddress=true
+      - DISCOVERY_SERVER_HOST=discovery-server
+      - DISCOVERY_SERVER_PORT=8761
+      - CONFIG_SERVER_HOST=config-server
+      - CONFIG_SERVER_PORT=8888
     depends_on:
       - discovery-server
       - config-server
@@ -70,29 +73,32 @@ services:
       - "8080:8080"
     links:
       - discovery-server
+      - storage-service
     environment:
       - WAITING_FOR_DEPENDENCE=true
-      - eureka.client.serviceUrl.defaultZone=http://discovery-server:8761/eureka
-      - eureka.instance.preferIpAddress=true
+      - DISCOVERY_SERVER_HOST=discovery-server
+      - DISCOVERY_SERVER_PORT=8761
+      - STORAGE_SERVICE_HOST=storage-service
+      - STORAGE_SERVICE_PORT=8091
     depends_on:
       - discovery-server
       - rating-service
       - hackster-service
       - storage-service
 #
-  # client-server:
-  #   image: client-server
-  #   ports:
-  #     - "8083:8083"
-  #   links:
-  #    - discovery-server
-  #   environment:
-  #- WAITING_FOR_DEPENDENCE=true
-  #     eureka.host: discovery-server
-  #     eureka.instance.preferIpAddress: 'true'
-  #   depends_on:
-  #     - discovery-server
-  #     - storage-service
+# client-server:
+#   image: client-server
+#   ports:
+#     - "8083:8083"
+#   links:
+#    - discovery-server
+#   environment:
+#- WAITING_FOR_DEPENDENCE=true
+#     eureka.host: discovery-server
+#     eureka.instance.preferIpAddress: 'true'
+#   depends_on:
+#     - discovery-server
+#     - storage-service
 #
   api-gateway-service:
     image: api-gateway-service
@@ -100,15 +106,23 @@ services:
       - "8090:8090"
     links:
       - discovery-server
+      - realtor-service
+      - storage-service
     environment:
       - WAITING_FOR_DEPENDENCE=true
-      - eureka.client.serviceUrl.defaultZone=http://discovery-server:8761/eureka
-      - eureka.instance.preferIpAddress=true
+      - DISCOVERY_SERVER_HOST=discovery-server
+      - DISCOVERY_SERVER_PORT=8761
+      - REALTOR_SERVICE_HOST=realtor-service
+      - REALTOR_SERVICE_PORT=8080
+      # TODO replace with client-service
+      - STORAGE_SERVICE_HOST=storage-service
+      - STORAGE_SERVICE_PORT=8091
     depends_on:
       - discovery-server
       - realtor-service
+      - storage-service
       # - client-server
-
-#networks:
-#  default:
-#    driver: spring-cloud-driver
+#
+networks:
+  default:
+    driver: bridge

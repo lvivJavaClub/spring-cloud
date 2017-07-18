@@ -8,6 +8,7 @@ import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.client.HttpClientBuilder;
 import org.junit.BeforeClass;
 import org.junit.ClassRule;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.testcontainers.containers.DockerComposeContainer;
 
@@ -17,6 +18,7 @@ import java.io.IOException;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
 
+@Ignore
 public class EntToEndIntegrationTest {
 
   private static final int SLEEP = 5000;
