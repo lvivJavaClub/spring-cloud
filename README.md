@@ -14,6 +14,7 @@ Sandbox to play with spring cloud features
 |----------------------|-----------------------------|--------------|--------------------------------------------------|
 | Rating service | Rating Calculation Service | 8081 | |
 | Hackster service| Hackster Detection Service | 8082| |
+| Client service| Client Service | 8083| |
 | Realtor service| Realtor Api Service | 8080| To call other services used Feign, RestTemplate |
 | Storage service| Storage of Apartment Records Service | 8091| H2 based service for ApartmentRecord data storage. |
 | API gateway service| Zull API Gateway Service | 8090| |
