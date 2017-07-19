@@ -30,8 +30,6 @@ echo
 
 echo "Starting hackster service"
 echo "Setting eureka.client.serviceUrl.defaultZone to http://${DISCOVERY_SERVER_HOST}:${DISCOVERY_SERVER_PORT}/eureka"
-echo "Setting spring.cloud.config.uri to http://${DISCOVERY_SERVER_HOST}:${CONFIG_SERVER_PORT}"
 
 env "eureka.client.serviceUrl.defaultZone=http://${DISCOVERY_SERVER_HOST}:${DISCOVERY_SERVER_PORT}/eureka" \
-    "spring.cloud.config.uri=http://${CONFIG_SERVER_HOST}:${CONFIG_SERVER_PORT}/" \
     java -jar ./hackster-service.jar

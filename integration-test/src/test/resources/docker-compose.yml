@@ -15,8 +15,6 @@ services:
     environment:
       - JAVA_CLUB_SRC_HOME=https://github.com/lvivJavaClub
       - WAITING_FOR_DEPENDENCE=true
-      - DISCOVERY_SERVER_HOST=discovery-server
-      - DISCOVERY_SERVER_PORT=8761
     depends_on:
       - discovery-server
 #
@@ -28,8 +26,6 @@ services:
       - discovery-server
     environment:
       - WAITING_FOR_DEPENDENCE=true
-      - DISCOVERY_SERVER_HOST=discovery-server
-      - DISCOVERY_SERVER_PORT=8761
     depends_on:
       - discovery-server
 #
@@ -42,10 +38,6 @@ services:
       - config-server
     environment:
       - WAITING_FOR_DEPENDENCE=true
-      - DISCOVERY_SERVER_HOST=discovery-server
-      - DISCOVERY_SERVER_PORT=8761
-      - CONFIG_SERVER_HOST=config-server
-      - CONFIG_SERVER_PORT=8888
     depends_on:
       - discovery-server
       - config-server
@@ -59,10 +51,6 @@ services:
       - config-server
     environment:
       - WAITING_FOR_DEPENDENCE=true
-      - DISCOVERY_SERVER_HOST=discovery-server
-      - DISCOVERY_SERVER_PORT=8761
-      - CONFIG_SERVER_HOST=config-server
-      - CONFIG_SERVER_PORT=8888
     depends_on:
       - discovery-server
       - config-server
@@ -76,10 +64,6 @@ services:
       - storage-service
     environment:
       - WAITING_FOR_DEPENDENCE=true
-      - DISCOVERY_SERVER_HOST=discovery-server
-      - DISCOVERY_SERVER_PORT=8761
-      - STORAGE_SERVICE_HOST=storage-service
-      - STORAGE_SERVICE_PORT=8091
     depends_on:
       - discovery-server
       - rating-service
@@ -110,13 +94,6 @@ services:
       - storage-service
     environment:
       - WAITING_FOR_DEPENDENCE=true
-      - DISCOVERY_SERVER_HOST=discovery-server
-      - DISCOVERY_SERVER_PORT=8761
-      - REALTOR_SERVICE_HOST=realtor-service
-      - REALTOR_SERVICE_PORT=8080
-      # TODO replace with client-service
-      - STORAGE_SERVICE_HOST=storage-service
-      - STORAGE_SERVICE_PORT=8091
     depends_on:
       - discovery-server
       - realtor-service
