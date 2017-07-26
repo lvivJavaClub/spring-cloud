@@ -42,6 +42,23 @@ mvn clean install
 
 ```
 
+## PCF
+Pivotal cf can be used on both: server trial and local installation: PCF dev, more information:
+https://docs.pivotal.io/pcf-dev/
+
+manifest.yml was created to push with configured environment options and set spring-profile 'cloud' to enable eureka 
+detection via 'VCAP' environment based configuration. More information about environment variables:
+http://docs.pivotal.io/pivotalcf/1-11/devguide/deploy-apps/environment-variable.html
+
+To set eureka service after push to cloud-foundry run:
+cf cups eureka -p '{"url": "http://discovery.{YOUR_DEFINED_CF_HOST}/eureka/"}', i.e.: 
+YOUR_DEFINED_CF_HOST = local.pcfdev.io.
+
+In application \ bootstrap properties is used "nonSecurePort: 8080", as eureka is deployed on '8080', 
+as all other instances, so it redefines default 80 port to make possible interconnection between registered via 
+eureka services.
+
+
 ## TODO Items
 - [ ] Check Feign Fallback ?
 - [x] Storage Service (persistance + Eureka client)
