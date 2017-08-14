@@ -3,8 +3,8 @@
 WAITING_FOR_DEPENDENCE=${WAITING_FOR_DEPENDENCE:='false'}
 
 if [ "$WAITING_FOR_DEPENDENCE" != "true" ]; then
-    echo "Starting realtor service immediately"
-    java -jar ./realtor-service.jar
+    echo "Starting config server immediately"
+    java -jar ./client-service.jar
     exit 0
 fi
 
@@ -26,24 +26,8 @@ until $(curl --output /dev/null --silent --head --fail "http://${DISCOVERY_SERVE
 done
 echo
 
-RATING_SERVICE=${RATING_SERVICE:='rating-service'}
-echo "Trying to get '${RATING_SERVICE}' from ${DISCOVERY_SERVER_HOST}:${DISCOVERY_SERVER_PORT}"
-until $(curl --output /dev/null --silent --head --fail "http://${DISCOVERY_SERVER_HOST}:${DISCOVERY_SERVER_PORT}/eureka/apps/${RATING_SERVICE}"); do
-    echo -e ".\c"
-    sleep 1
-done
-echo
-
-HACKSTER_SERVICE=${HACKSTER_SERVICE:='hackster-service'}
-echo "Trying to get '${HACKSTER_SERVICE}' from ${DISCOVERY_SERVER_HOST}:${DISCOVERY_SERVER_PORT}"
-until $(curl --output /dev/null --silent --head --fail "http://${DISCOVERY_SERVER_HOST}:${DISCOVERY_SERVER_PORT}/eureka/apps/${HACKSTER_SERVICE}"); do
-    echo -e ".\c"
-    sleep 1
-done
-echo
-
-echo "Starting realtor service"
+echo "Starting client service"
 echo "Setting eureka.client.serviceUrl.defaultZone to http://${DISCOVERY_SERVER_HOST}:${DISCOVERY_SERVER_PORT}/eureka"
 
 env "eureka.client.serviceUrl.defaultZone=http://${DISCOVERY_SERVER_HOST}:${DISCOVERY_SERVER_PORT}/eureka" \
-    java -jar ./realtor-service.jar
+    java -jar ./client-service.jar

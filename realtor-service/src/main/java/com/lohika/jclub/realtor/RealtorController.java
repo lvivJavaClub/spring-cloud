@@ -37,7 +37,8 @@ public class RealtorController {
     }
 
     @PostMapping("/storeApartments")
-    public void storeApartment(@RequestBody ApartmentRecord apartmentRecord) {
+    @ResponseBody
+    public Apartment storeApartment(@RequestBody ApartmentRecord apartmentRecord) {
 
         Apartment newApartment = Apartment.builder()
             .location(apartmentRecord.getLocation())
@@ -53,6 +54,7 @@ public class RealtorController {
                 .decoder(new JacksonDecoder()).target(ApartmentRecordClient.class, "http://storage-service");
         apartmentRecordClient.storeApartment(apartmentRecord);*/
         log.info("Stored, {}", apartment);
+        return apartment;
     }
 
     @RequestMapping("/service-instances/{applicationName}")

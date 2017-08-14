@@ -70,19 +70,17 @@ services:
       - hackster-service
       - storage-service
 #
-# client-server:
-#   image: client-server
-#   ports:
-#     - "8083:8083"
-#   links:
-#    - discovery-server
-#   environment:
-#- WAITING_FOR_DEPENDENCE=true
-#     eureka.host: discovery-server
-#     eureka.instance.preferIpAddress: 'true'
-#   depends_on:
-#     - discovery-server
-#     - storage-service
+  client-service:
+    image: client-service
+    ports:
+      - "8083:8083"
+    links:
+      - discovery-server
+    environment:
+      - WAITING_FOR_DEPENDENCE=true
+    depends_on:
+      - discovery-server
+      - storage-service
 #
   api-gateway-service:
     image: api-gateway-service
@@ -91,14 +89,13 @@ services:
     links:
       - discovery-server
       - realtor-service
-      - storage-service
+      - client-service
     environment:
       - WAITING_FOR_DEPENDENCE=true
     depends_on:
       - discovery-server
       - realtor-service
-      - storage-service
-      # - client-server
+      - client-service
 #
 networks:
   default:

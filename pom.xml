@@ -23,6 +23,7 @@
 		<module>realtor-service</module>
 		<module>storage-service</module>
 		<module>storage-service-client</module>
+		<module>client-service</module>
 		<module>api-gateway-service</module>
     <module>integration-test</module>
   </modules>

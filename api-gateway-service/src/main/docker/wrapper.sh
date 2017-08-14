@@ -18,22 +18,17 @@ until $(curl --output /dev/null --silent --head --fail "http://${DISCOVERY_SERVE
 done
 echo
 
-REALTOR_SERVICE_HOST=${REALTOR_SERVICE_HOST:='realtor-service'}
-REALTOR_SERVICE_PORT=${REALTOR_SERVICE_PORT:=8080}
-
-echo "Trying to connect to on ${REALTOR_SERVICE_HOST}:${REALTOR_SERVICE_PORT}"
-until $(curl --output /dev/null --silent --head --fail "http://${REALTOR_SERVICE_HOST}:${REALTOR_SERVICE_PORT}/info"); do
+REALTOR_SERVICE=${REALTOR_SERVICE:='realtor-service'}
+echo "Trying to get '${REALTOR_SERVICE}' from ${DISCOVERY_SERVER_HOST}:${DISCOVERY_SERVER_PORT}"
+until $(curl --output /dev/null --silent --head --fail "http://${DISCOVERY_SERVER_HOST}:${DISCOVERY_SERVER_PORT}/eureka/apps/${REALTOR_SERVICE}"); do
     echo -e ".\c"
     sleep 1
 done
 echo
 
-# rem TODO replace with client-service
-STORAGE_SERVICE_HOST=${STORAGE_SERVICE_HOST:='storage-service'}
-STORAGE_SERVICE_PORT=${STORAGE_SERVICE_PORT:=8091}
-
-echo "Trying to connect to on ${STORAGE_SERVICE_HOST}:${STORAGE_SERVICE_PORT}"
-until $(curl --output /dev/null --silent --head --fail "http://${STORAGE_SERVICE_HOST}:${STORAGE_SERVICE_PORT}/info"); do
+CLIENT_SERVICE=${CLIENT_SERVICE:='client-service'}
+echo "Trying to get '${CLIENT_SERVICE}' from ${DISCOVERY_SERVER_HOST}:${DISCOVERY_SERVER_PORT}"
+until $(curl --output /dev/null --silent --head --fail "http://${DISCOVERY_SERVER_HOST}:${DISCOVERY_SERVER_PORT}/eureka/apps/${CLIENT_SERVICE}"); do
     echo -e ".\c"
     sleep 1
 done

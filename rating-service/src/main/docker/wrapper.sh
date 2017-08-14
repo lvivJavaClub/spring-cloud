@@ -18,11 +18,9 @@ until $(curl --output /dev/null --silent --head --fail "http://${DISCOVERY_SERVE
 done
 echo
 
-CONFIG_SERVER_HOST=${CONFIG_SERVER_HOST:='config-server'}
-CONFIG_SERVER_PORT=${CONFIG_SERVER_PORT:=8888}
-
-echo "Trying to connect to on ${CONFIG_SERVER_HOST}:${CONFIG_SERVER_PORT}"
-until $(curl --output /dev/null --silent --head --fail "http://${CONFIG_SERVER_HOST}:${CONFIG_SERVER_PORT}/info"); do
+CONFIG_SERVER=${CONFIG_SERVER:='config-server'}
+echo "Trying to get '${CONFIG_SERVER}' from ${DISCOVERY_SERVER_HOST}:${DISCOVERY_SERVER_PORT}"
+until $(curl --output /dev/null --silent --head --fail "http://${DISCOVERY_SERVER_HOST}:${DISCOVERY_SERVER_PORT}/eureka/apps/${CONFIG_SERVER}"); do
     echo -e ".\c"
     sleep 1
 done

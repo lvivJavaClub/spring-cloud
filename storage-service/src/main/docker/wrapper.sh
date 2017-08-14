@@ -18,6 +18,7 @@ until $(curl --output /dev/null --silent --head --fail "http://${DISCOVERY_SERVE
 done
 echo
 
+sleep 15
 echo "Starting storage server"
 echo "Setting eureka.client.serviceUrl.defaultZone to http://${DISCOVERY_SERVER_HOST}:${DISCOVERY_SERVER_PORT}/eureka"
 
