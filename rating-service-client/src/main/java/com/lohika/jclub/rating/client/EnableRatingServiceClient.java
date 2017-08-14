@@ -1,7 +1,5 @@
 package com.lohika.jclub.rating.client;
 
-import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
-import org.springframework.cloud.netflix.feign.EnableFeignClients;
 import org.springframework.context.annotation.Import;
 import org.springframework.hateoas.config.EnableHypermediaSupport;
 
@@ -16,8 +14,6 @@ import java.lang.annotation.Target;
 @Documented
 
 @EnableHypermediaSupport(type = EnableHypermediaSupport.HypermediaType.HAL)
-@EnableFeignClients(clients = {RatingServiceClient.class})
 @Import({FeignMappingDefaultConfiguration.class, RatingServiceClientConfiguration.class})
-@EnableDiscoveryClient
 public @interface EnableRatingServiceClient {
 }

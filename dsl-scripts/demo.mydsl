@@ -1,0 +1,20 @@
+String myPhone = '123'
+String myName = 'bot'
+String myEmail = 'bot@company.name'
+
+(1..100).each {
+  String location = "location-${it}"
+  double myPrice = 2
+  double mySqft = 1 + (it as int)
+  def rating = rating location, myPrice, mySqft
+
+  if (rating > 400) {
+    apartment(location) {
+      price myPrice
+      sqft mySqft
+      phone myPhone
+      realtorName myName
+      mail myEmail
+    }
+  }
+}
