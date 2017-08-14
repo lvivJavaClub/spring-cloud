@@ -26,6 +26,8 @@ public class HacksterServiceClientTest {
   public static GenericContainer HacksterService = new GenericContainer("hackster-service:latest")
       .withExposedPorts(8082)
       .withEnv("maxAllowedApartmentsPerRealtor", Integer.toString(MAX_ALLOWED_APARTMENTS_PER_REALTOR))
+      .withEnv("spring.cloud.config.discovery.enabled", "false")
+      .withEnv("spring.cloud.config.fail-fast", "false")
       .waitingFor(new LogMessageWaitStrategy().withRegEx(".*Started HacksterServiceApplication in.*\\s"));
 
   @Autowired

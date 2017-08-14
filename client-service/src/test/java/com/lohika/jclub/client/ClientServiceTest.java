@@ -4,6 +4,7 @@ import com.lohika.jclub.storage.client.Apartment;
 import com.lohika.jclub.storage.client.StorageServiceClient;
 
 import org.junit.ClassRule;
+import org.junit.Ignore;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -24,6 +25,7 @@ import java.time.Duration;
 
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 
+@Ignore
 @RunWith(SpringRunner.class)
 @SpringBootTest(classes = ClientServiceApplication.class)
 @ContextConfiguration(initializers = ClientServiceTest.Initializer.class)
