@@ -1,0 +1,25 @@
+apartment {
+  location "location"
+  price 1
+  sqft 1
+  phone 'phone'
+  realtorName 'realtorName'
+  mail 'mail'
+}
+
+apartment("location", {
+  price 1
+  sqft 1
+  phone 'phone'
+  realtorName 'realtorName'
+  mail 'mail'
+})
+
+
+apartment("location") {
+  price 1
+  sqft 1
+  phone 'phone'
+  realtorName 'realtorName'
+  mail 'mail'
+}

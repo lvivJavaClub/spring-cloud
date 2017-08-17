@@ -1,0 +1,25 @@
+def dslContext = context(
+    filetypes: ['mydsl'],
+    scope: scriptScope())
+
+contributor(dslContext) {
+  method name: 'rating', type: 'java.lang.Double', params: [location: 'java.lang.String', price: 'java.lang.Double', sqft: 'java.lang.Double']
+
+  method name: 'apartment', type: 'void', params: [body: 'groovy.lang.Closure']
+  method name: 'apartment', type: 'void', params: [location: 'java.lang.String', body: 'groovy.lang.Closure']
+}
+
+def contributorBody = context(
+    filetypes: ['mydsl'],
+    scope: closureScope(isArg: true))
+
+contributor([contributorBody]) {
+  if (enclosingCall("apartment")) {
+    method name: 'location', type: 'void', params: [value: 'java.lang.String']
+    method name: 'price', type: 'void', params: [value: 'java.lang.Double']
+    method name: 'sqft', type: 'void', params: [value: 'java.lang.Double']
+    method name: 'realtorName', type: 'void', params: [value: 'java.lang.String']
+    method name: 'mail', type: 'void', params: [value: 'java.lang.String']
+  }
+}
+
