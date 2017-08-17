@@ -1,5 +1,5 @@
 apartment {
-  location "location"
+  location "location11"
   price 1
   sqft 1
   phone 'phone'
@@ -7,7 +7,7 @@ apartment {
   mail 'mail'
 }
 
-apartment("location", {
+apartment("location22", {
   price 1
   sqft 1
   phone 'phone'
@@ -16,10 +16,13 @@ apartment("location", {
 })
 
 
-apartment("location") {
+apartment("location33") {
+    location "location44"
   price 1
   sqft 1
   phone 'phone'
   realtorName 'realtorName'
   mail 'mail'
+    location "location55"
 }
+

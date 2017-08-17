@@ -35,7 +35,7 @@ public class DslController {
 
   @GetMapping(path = "/{scriptName}")
   public Object runScript(@PathVariable(name = "scriptName") String scriptName) throws IOException {
-    File file = new File(basepath + scriptName + ".groovy");
+    File file = new File(basepath + scriptName + ".mydsl");
     String script = new String(Files.readAllBytes(Paths.get(file.getPath())));
 
     MyDsl dsl = new MyDsl(ratingServiceClient, storageServiceClient);
