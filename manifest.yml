@@ -7,13 +7,15 @@ applications:
   path: discovery-server/target/discovery-server-0.0.1-SNAPSHOT.jar
   host: discovery
 - name: storage-service
-  memory: 400M
+  memory: 512M
   disk_quota: 512M
   instances: 1
   path: storage-service/target/storage-service-0.0.1-SNAPSHOT.jar
   host: storage
   env:
-      eureka.client.serviceUrl.defaultZone: http://discovery.local.pcfdev.io/eureka/
+    spring.profiles.active: cloud
+  services:
+      - eureka
 - name: config-server
   memory: 400M
   disk_quota: 512M
@@ -31,7 +33,9 @@ applications:
   path: hackster-service/target/hackster-service-0.0.1-SNAPSHOT.jar
   host: hackster
   env:
-      eureka.client.serviceUrl.defaultZone: http://discovery.local.pcfdev.io/eureka/
+       spring.profiles.active: cloud
+  services:
+    - eureka
 - name: rating-service
   memory: 400M
   disk_quota: 400M
