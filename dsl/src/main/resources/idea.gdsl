@@ -20,6 +20,6 @@ contributor([contributorBody]) {
     method name: 'sqft', type: 'void', params: [value: 'java.lang.Double']
     method name: 'realtorName', type: 'void', params: [value: 'java.lang.String']
     method name: 'mail', type: 'void', params: [value: 'java.lang.String']
+    method name: 'phone', type: 'void', params: [value: 'java.lang.String']
   }
 }
-

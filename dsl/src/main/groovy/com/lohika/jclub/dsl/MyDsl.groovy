@@ -13,39 +13,40 @@ class MyDsl {
   private RatingServiceClient ratingServiceClient
   private StorageServiceClient storageServiceClient
 
-  def list = []
+  def apartments = []
 
   MyDsl(RatingServiceClient ratingServiceClient, StorageServiceClient storageServiceClient) {
     this.storageServiceClient = storageServiceClient
     this.ratingServiceClient = ratingServiceClient
   }
 
-  def rating (location, myPrice, mySqft) {
-    Apartment a =  Apartment.builder()
-    .sqft (mySqft)
-    .location (location)
-    .price(myPrice)
-    .build()
+  def rating(String location, double myPrice, double mySqft) {
+    Apartment apartment = Apartment.builder()
+        .sqft(mySqft)
+        .location(location)
+        .price(myPrice)
+        .build()
 
-    ratingServiceClient.getRating(a).rating
+    ratingServiceClient.getRating(apartment).rating
   }
 
-  def apartment (Closure closure) {
-    ApartmentDsl a = new ApartmentDsl()
-    closure.delegate = a
+  def apartment(Closure closure) {
+    ApartmentDsl apartment = new ApartmentDsl()
+    closure.delegate = apartment
     closure()
 
-    storageServiceClient.create(a.toEntity())
-    list.add(a)
+    storageServiceClient.create(apartment.toEntity())
+    apartments.add(apartment)
   }
 
-  def apartment (String location, Closure closure) {
-    ApartmentDsl a = new ApartmentDsl()
-    a.location = location
-    closure.delegate = a
+  def apartment(String location, Closure closure) {
+    ApartmentDsl apartment = new ApartmentDsl()
+    apartment.location = location
+
+    closure.delegate = apartment
     closure()
 
-    storageServiceClient.create(a.toEntity())
-    list.add(a)
+    storageServiceClient.create(apartment.toEntity())
+    apartments.add(apartment)
   }
 }

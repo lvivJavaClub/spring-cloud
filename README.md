@@ -18,6 +18,7 @@ Sandbox to play with spring cloud features
 | Realtor service| Realtor Api Service | 8080| To call other services used Feign, RestTemplate |
 | Storage service| Storage of Apartment Records Service | 8091| H2 based service for ApartmentRecord data storage. |
 | API gateway service| Zull API Gateway Service | 8090| |
+| DSL executor service | DSL executor service | 8088| |
 
 
 # Dev

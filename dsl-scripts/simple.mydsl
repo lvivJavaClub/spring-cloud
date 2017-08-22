@@ -17,12 +17,10 @@ apartment("location22", {
 
 
 apartment("location33") {
-    location "location44"
   price 1
   sqft 1
   phone 'phone'
   realtorName 'realtorName'
   mail 'mail'
-    location "location55"
 }
 
