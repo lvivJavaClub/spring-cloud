@@ -61,6 +61,8 @@ services:
       - "8080:8080"
     links:
       - discovery-server
+      - rating-service
+      - hackster-service
       - storage-service
     environment:
       - WAITING_FOR_DEPENDENCE=true
@@ -80,6 +82,25 @@ services:
       - WAITING_FOR_DEPENDENCE=true
     depends_on:
       - discovery-server
+      - storage-service
+#
+  dsl-executor-service:
+    image: dsl-executor-service
+    ports:
+      - "8088:8088"
+    links:
+      - discovery-server
+      - rating-service
+      - hackster-service
+      - storage-service
+    volumes:
+       - ./dsl:/opt/spring-cloud/dsl-scripts
+    environment:
+      - WAITING_FOR_DEPENDENCE=true
+    depends_on:
+      - discovery-server
+      - rating-service
+      - hackster-service
       - storage-service
 #
   api-gateway-service:
