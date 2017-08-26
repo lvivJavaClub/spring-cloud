@@ -7,9 +7,13 @@ import com.lohika.jclub.dsl.core.MyDsl;
 import com.lohika.jclub.rating.client.RatingServiceClient;
 import com.lohika.jclub.storage.client.StorageServiceClient;
 
+import org.springframework.cloud.sleuth.Span;
+import org.springframework.cloud.sleuth.Tracer;
+
 import org.codehaus.groovy.control.CompilerConfiguration;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.cloud.sleuth.sampler.AlwaysSampler;
 import org.springframework.stereotype.Service;
 
 import java.io.File;
@@ -27,6 +31,9 @@ public class DslService {
   private String basepath;
 
   @Autowired
+  private Tracer tracer;
+
+  @Autowired
   private StorageServiceClient storageServiceClient;
 
   @Autowired
@@ -39,15 +46,35 @@ public class DslService {
 
   public MyDsl runScript(String scriptName) throws IOException {
     String script = getScriptByName(scriptName);
-    return run(script);
+    return run(getDelegatingScript(script));
   }
 
   private String getScriptByName(String scriptName) throws IOException {
+    this.tracer.addTag("script.name", scriptName);
     File file = new File(basepath + scriptName + DSL_EXTENSION);
-    return new String(Files.readAllBytes(Paths.get(file.getPath())));
+    this.tracer.addTag("script.file", file.getAbsolutePath());
+
+    Span span = this.tracer.createSpan("load script");
+    try {
+      String content = new String(Files.readAllBytes(Paths.get(file.getPath())));
+      this.tracer.addTag("script.length", String.valueOf(content.length()));
+      return content;
+    } finally {
+      this.tracer.close(span);
+    }
   }
 
-  private MyDsl run(String script) {
+  private MyDsl run(DelegatingScript delegatingScript) {
+    Span run = this.tracer.createSpan("Run script");
+    delegatingScript.run();
+    this.tracer.close(run);
+
+    return (MyDsl) delegatingScript.getDelegate();
+  }
+
+  private DelegatingScript getDelegatingScript(String script) {
+    Span prepare = this.tracer.createSpan("Prepare script");
+
     MyDsl dsl = new MyDsl(ratingServiceClient, storageServiceClient);
 
     CompilerConfiguration configuration = new CompilerConfiguration();
@@ -57,8 +84,8 @@ public class DslService {
 
     DelegatingScript delegatingScript = (DelegatingScript) groovy.parse(script);
     delegatingScript.setDelegate(dsl);
-    delegatingScript.run();
+    this.tracer.close(prepare);
 
-    return dsl;
+    return delegatingScript;
   }
 }

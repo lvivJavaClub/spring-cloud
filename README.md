@@ -7,6 +7,7 @@ Sandbox to play with spring cloud features
 |----------------------|---------------------------|--------------|----------------------------------------------------|
 | Configuration server | Configuration server | 8888 | You should set an `JAVA_CLUB_SRC_HOME` variable which points to the folder where your java club sources are checked out. <br/>Configs URL example: http://localhost:8888/cloud/master |
 | Discovery server | Discovery server | 8761 | Eureka server for services registration. |
+| Zipkin server | Zipkin server | 9411 | Zipkin server for Zipkin UI. |
 
 
 ## Service
@@ -53,7 +54,7 @@ mvn clean install
 - [ ] Cloud foundary
 - [x] FeignClient usage
 - [ ] Circuit Breaker: Hystrix Clients
-- [ ] Connect Zipkin
+- [x] Connect Zipkin
 - [ ] Event Driven with JMS or Kafka
 - [ ] Create parser for Visokiy Zamok data
 - [ ] Security check to implement with Zuul only
