@@ -17,6 +17,8 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 
+import javax.annotation.PostConstruct;
+
 @Service
 public class DslService {
   private static final String DSL_EXTENSION = ".mydsl";
@@ -29,6 +31,11 @@ public class DslService {
 
   @Autowired
   private RatingServiceClient ratingServiceClient;
+
+  @PostConstruct
+  public void warmUp() {
+    storageServiceClient.list();
+  }
 
   public MyDsl runScript(String scriptName) throws IOException {
     String script = getScriptByName(scriptName);

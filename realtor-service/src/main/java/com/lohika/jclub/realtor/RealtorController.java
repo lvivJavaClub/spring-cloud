@@ -15,6 +15,8 @@ import org.springframework.web.client.RestTemplate;
 
 import java.util.List;
 
+import javax.annotation.PostConstruct;
+
 @Slf4j
 @RestController
 public class RealtorController {
@@ -27,6 +29,11 @@ public class RealtorController {
 
     @Autowired
     private StorageServiceClient storageServiceClient;
+
+    @PostConstruct
+    public void warmUp() {
+        storageServiceClient.list();
+    }
 
     @PostMapping("/apartments")
     public void addApartment(@RequestBody ApartmentRecord apartmentRecord) {

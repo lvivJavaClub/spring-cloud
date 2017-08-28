@@ -20,8 +20,8 @@ import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.testcontainers.containers.GenericContainer;
 import org.testcontainers.containers.wait.LogMessageWaitStrategy;
 
-import java.time.Duration;
-
+import static org.hamcrest.CoreMatchers.notNullValue;
+import static org.hamcrest.MatcherAssert.assertThat;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 
 @RunWith(SpringRunner.class)
@@ -53,6 +53,9 @@ public class ClientServiceTest {
                         .realtorName("Bariga")
                         .sqft(55)
                         .build());
+
+        assertThat(lviv, notNullValue());
+        assertThat(lviv.getId(), notNullValue());
 
         // When
         mockMvc.perform(MockMvcRequestBuilders.get("/apartments"))

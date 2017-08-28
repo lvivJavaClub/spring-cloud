@@ -2,12 +2,17 @@ package com.lohika.jclub.integration;
 
 import lombok.extern.log4j.Log4j;
 
+import com.lohika.jclub.storage.client.StorageServiceClient;
+
 import org.apache.http.HttpResponse;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.impl.client.HttpClientBuilder;
+import org.junit.After;
+import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.runner.RunWith;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.util.EnvironmentTestUtils;
 import org.springframework.context.ApplicationContextInitializer;
@@ -16,6 +21,8 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import java.io.IOException;
+
+import javax.annotation.PostConstruct;
 
 import static org.hamcrest.CoreMatchers.notNullValue;
 import static org.hamcrest.MatcherAssert.assertThat;
@@ -33,9 +40,23 @@ public abstract class BaseIntegrationTest {
   private static final int DISCOVERY_SERVER_PORT = 8761;
   private static final int SLEEP = 5000;
 
+  @Autowired
+  protected StorageServiceClient storageServiceClient;
+
   @BeforeClass
   public static void init() {
     assertThat(EntToEndIntegrationTestSuite.environment, notNullValue());
+  }
+
+  @Before
+  public void warmUp() {
+    storageServiceClient.list();
+  }
+
+  @Before
+  public void cleanUp() {
+    storageServiceClient.list().getContent()
+        .forEach(apartment -> storageServiceClient.delete(apartment.getId()));
   }
 
   public static void waitFor(String service) throws InterruptedException {

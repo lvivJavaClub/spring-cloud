@@ -11,12 +11,19 @@ import org.springframework.web.bind.annotation.RestController;
 
 import lombok.extern.slf4j.Slf4j;
 
+import javax.annotation.PostConstruct;
+
 @Slf4j
 @RestController
 public class ClientController {
 
     @Autowired
     private StorageServiceClient storageServiceClient;
+
+    @PostConstruct
+    public void warmUp() {
+        storageServiceClient.list();
+    }
 
     @GetMapping(value = "/apartments", produces = MediaType.APPLICATION_JSON_VALUE)
     public PagedResources<Apartment> getApartments() {
