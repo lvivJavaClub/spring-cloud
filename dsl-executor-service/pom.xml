@@ -3,7 +3,7 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
   <modelVersion>4.0.0</modelVersion>
 
-  <groupId>com.lohika.jclub.dsl.service</groupId>
+  <groupId>com.lohika.jclub.dsl</groupId>
   <artifactId>dsl-executor-service</artifactId>
   <version>0.0.1-SNAPSHOT</version>
   <packaging>jar</packaging>
@@ -14,7 +14,7 @@
   <parent>
     <groupId>org.springframework.boot</groupId>
     <artifactId>spring-boot-starter-parent</artifactId>
-    <version>1.5.3.RELEASE</version>
+    <version>1.5.4.RELEASE</version>
     <relativePath/> <!-- lookup parent from repository -->
   </parent>
 
@@ -28,18 +28,23 @@
 
   <dependencies>
     <dependency>
-      <groupId>com.lohika.jclub.storage.client</groupId>
+      <groupId>com.lohika.jclub.dsl</groupId>
+      <artifactId>dsl-core</artifactId>
+      <version>0.0.1-SNAPSHOT</version>
+    </dependency>
+    <dependency>
+      <groupId>com.lohika.jclub.storage</groupId>
       <artifactId>storage-service-client</artifactId>
       <version>0.0.1-SNAPSHOT</version>
     </dependency>
     <dependency>
-      <groupId>com.lohika.jclub.rating.client</groupId>
+      <groupId>com.lohika.jclub.rating</groupId>
       <artifactId>rating-service-client</artifactId>
       <version>0.0.1-SNAPSHOT</version>
     </dependency>
     <dependency>
-      <groupId>com.lohika.jclub.dsl</groupId>
-      <artifactId>dsl</artifactId>
+      <groupId>com.lohika.jclub.hackster</groupId>
+      <artifactId>hackster-service-client</artifactId>
       <version>0.0.1-SNAPSHOT</version>
     </dependency>
 
@@ -60,6 +65,12 @@
       <groupId>org.codehaus.groovy</groupId>
       <artifactId>groovy</artifactId>
       <version>2.4.11</version>
+    </dependency>
+
+    <dependency>
+      <groupId>org.springframework.boot</groupId>
+      <artifactId>spring-boot-starter-test</artifactId>
+      <scope>test</scope>
     </dependency>
   </dependencies>
 
@@ -84,10 +95,10 @@
       <plugin>
         <artifactId>maven-antrun-plugin</artifactId>
         <configuration>
-          <tasks>
+          <target>
             <copy file="${project.build.directory}/${project.build.finalName}.jar"
                   tofile="${project.build.directory}/${project.artifactId}.jar"/>
-          </tasks>
+          </target>
         </configuration>
         <executions>
           <execution>

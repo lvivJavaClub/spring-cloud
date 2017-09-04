@@ -21,6 +21,6 @@ echo
 sleep 15
 echo "Starting config server"
 echo "Setting eureka.client.serviceUrl.defaultZone to http://${DISCOVERY_SERVER_HOST}:${DISCOVERY_SERVER_PORT}/eureka"
-
+echo
 env "eureka.client.serviceUrl.defaultZone=http://${DISCOVERY_SERVER_HOST}:${DISCOVERY_SERVER_PORT}/eureka" \
     java -jar ./config-server.jar

@@ -44,6 +44,6 @@ echo
 
 echo "Starting realtor service"
 echo "Setting eureka.client.serviceUrl.defaultZone to http://${DISCOVERY_SERVER_HOST}:${DISCOVERY_SERVER_PORT}/eureka"
-
+echo
 env "eureka.client.serviceUrl.defaultZone=http://${DISCOVERY_SERVER_HOST}:${DISCOVERY_SERVER_PORT}/eureka" \
     java -jar ./realtor-service.jar

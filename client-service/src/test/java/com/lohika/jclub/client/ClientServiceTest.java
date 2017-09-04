@@ -4,7 +4,6 @@ import com.lohika.jclub.storage.client.Apartment;
 import com.lohika.jclub.storage.client.StorageServiceClient;
 
 import org.junit.ClassRule;
-import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;

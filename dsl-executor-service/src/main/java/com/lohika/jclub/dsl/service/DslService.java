@@ -3,7 +3,7 @@ package com.lohika.jclub.dsl.service;
 import groovy.lang.GroovyShell;
 import groovy.util.DelegatingScript;
 
-import com.lohika.jclub.dsl.MyDsl;
+import com.lohika.jclub.dsl.core.MyDsl;
 import com.lohika.jclub.rating.client.RatingServiceClient;
 import com.lohika.jclub.storage.client.StorageServiceClient;
 

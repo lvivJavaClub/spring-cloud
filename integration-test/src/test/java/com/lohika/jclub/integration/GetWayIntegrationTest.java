@@ -36,7 +36,7 @@ public class GetWayIntegrationTest extends BaseIntegrationTest {
   public void apartmentShouldBeAvailableAfterAdding() {
     /* GIVEN */
     final String email = "mail@domen.com";
-    Map params = new HashMap() {
+    HashMap params = new HashMap() {
       {
         put("location", "location");
         put("price", 1500.5);

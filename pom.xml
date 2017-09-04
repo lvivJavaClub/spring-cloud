@@ -12,17 +12,17 @@
 	<description>Spring cloud application</description>
 
 	<modules>
-		<module>config-server</module>
-		<module>dsl</module>
-		<module>dsl-executor-service</module>
 		<module>discovery-server</module>
+		<module>config-server</module>
 		<module>rating-service</module>
 		<module>rating-service-client</module>
 		<module>hackster-service</module>
 		<module>hackster-service-client</module>
-		<module>realtor-service</module>
 		<module>storage-service</module>
 		<module>storage-service-client</module>
+		<module>dsl-core</module>
+		<module>dsl-executor-service</module>
+		<module>realtor-service</module>
 		<module>client-service</module>
 		<module>api-gateway-service</module>
     <module>integration-test</module>
