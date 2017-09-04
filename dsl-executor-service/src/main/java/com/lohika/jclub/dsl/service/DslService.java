@@ -3,7 +3,7 @@ package com.lohika.jclub.dsl.service;
 import groovy.lang.GroovyShell;
 import groovy.util.DelegatingScript;
 
-import com.lohika.jclub.dsl.MyDsl;
+import com.lohika.jclub.dsl.core.MyDsl;
 import com.lohika.jclub.rating.client.RatingServiceClient;
 import com.lohika.jclub.storage.client.StorageServiceClient;
 
@@ -17,6 +17,8 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 
+import javax.annotation.PostConstruct;
+
 @Service
 public class DslService {
   private static final String DSL_EXTENSION = ".mydsl";
@@ -29,6 +31,11 @@ public class DslService {
 
   @Autowired
   private RatingServiceClient ratingServiceClient;
+
+  @PostConstruct
+  public void warmUp() {
+    storageServiceClient.list();
+  }
 
   public MyDsl runScript(String scriptName) throws IOException {
     String script = getScriptByName(scriptName);

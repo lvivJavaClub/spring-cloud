@@ -27,6 +27,8 @@ public class RatingServiceClientTest {
   @ClassRule
   public static GenericContainer RatingService = new GenericContainer("rating-service:latest")
       .withExposedPorts(8081)
+      .withEnv("spring.cloud.config.fail-fast", "false")
+      .withEnv("spring.cloud.config.discovery.enabled", "false")
       .withEnv("rate", "100")
       .withEnv("spring.cloud.config.discovery.enabled", "false")
       .withEnv("spring.cloud.config.fail-fast", "false")

@@ -1,0 +1,8 @@
+apartment {
+  location "ent-to-end-test-location"
+  price 2.4
+  sqft 3.4
+  phone 'phone'
+  realtorName 'realtorName'
+  mail 'ent-to-end-mail@domen.com'
+}

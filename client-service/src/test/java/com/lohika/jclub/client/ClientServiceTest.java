@@ -4,8 +4,6 @@ import com.lohika.jclub.storage.client.Apartment;
 import com.lohika.jclub.storage.client.StorageServiceClient;
 
 import org.junit.ClassRule;
-import org.junit.Ignore;
-import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,11 +19,10 @@ import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.testcontainers.containers.GenericContainer;
 import org.testcontainers.containers.wait.LogMessageWaitStrategy;
 
-import java.time.Duration;
-
+import static org.hamcrest.CoreMatchers.notNullValue;
+import static org.hamcrest.MatcherAssert.assertThat;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 
-@Ignore
 @RunWith(SpringRunner.class)
 @SpringBootTest(classes = ClientServiceApplication.class)
 @ContextConfiguration(initializers = ClientServiceTest.Initializer.class)
@@ -33,32 +30,15 @@ import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.
 public class ClientServiceTest {
 
     @ClassRule
-    public static GenericContainer discoveryService = new GenericContainer("discovery-service:latest")
-            .waitingFor(new LogMessageWaitStrategy().withRegEx(".*Started EurekaServerApplication in.*\\s"))
-            .withExposedPorts(8761);
-
-    @Rule
-    public GenericContainer storageService = new GenericContainer("storage-service:latest")
-            .withExposedPorts(8091)
-            .withEnv("eureka.client.serviceUrl.defaultZone", "http://" + discoveryService.getContainerIpAddress() + ":" + discoveryService.getMappedPort(8761) + "/eureka")
-            .withEnv("eureka.instance.preferIpAddress", "true")
-            .waitingFor(new LogMessageWaitStrategy().withRegEx(".*DiscoveryClient_STORAGE-SERVICE.*registration status: 204.*\\s"));
+    public static GenericContainer storageService = new GenericContainer("storage-service:latest")
+        .withExposedPorts(8091)
+        .waitingFor(new LogMessageWaitStrategy().withRegEx(".*Started StorageServiceApplication in.*\\s"));
 
     @Autowired
     private StorageServiceClient storageServiceClient;
 
     @Autowired
     private MockMvc mockMvc;
-
-    public static class Initializer implements ApplicationContextInitializer<ConfigurableApplicationContext> {
-        @Override
-        public void initialize(ConfigurableApplicationContext configurableApplicationContext) {
-            EnvironmentTestUtils.addEnvironment("testcontainers", configurableApplicationContext.getEnvironment(),
-                    "eureka.client.serviceUrl.defaultZone=http://" + discoveryService.getContainerIpAddress() +
-                            ":" + discoveryService.getMappedPort(8761) + "/eureka",
-                    "storage-service.ribbon.servers=http://");
-        }
-    }
 
     @Test
     public void testGetApartments() throws Exception {
@@ -73,6 +53,9 @@ public class ClientServiceTest {
                         .sqft(55)
                         .build());
 
+        assertThat(lviv, notNullValue());
+        assertThat(lviv.getId(), notNullValue());
+
         // When
         mockMvc.perform(MockMvcRequestBuilders.get("/apartments"))
                 .andDo(print());
@@ -81,4 +64,15 @@ public class ClientServiceTest {
         //TODO storageServiceClient does not creating the records.
         // fallback is working with 0 paging
     }
+
+  public static class Initializer implements ApplicationContextInitializer<ConfigurableApplicationContext> {
+    @Override
+    public void initialize(ConfigurableApplicationContext configurableApplicationContext) {
+
+      EnvironmentTestUtils.addEnvironment("testcontainers", configurableApplicationContext.getEnvironment(),
+          "storage-service.ribbon.servers=http://" + storageService.getContainerIpAddress() + ":"
+          + storageService.getMappedPort(8091) + "/"
+      );
+    }
+  }
 }

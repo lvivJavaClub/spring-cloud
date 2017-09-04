@@ -1,0 +1,123 @@
+version: "2"
+services:
+#
+  discovery-server:
+    image: discovery-server
+    ports:
+      - "8761:8761"
+#
+  config-server:
+    image: config-server
+    ports:
+      - "8888:8888"
+    links:
+      - discovery-server
+    environment:
+      - JAVA_CLUB_SRC_HOME=https://github.com/lvivJavaClub
+      - WAITING_FOR_DEPENDENCE=true
+    depends_on:
+      - discovery-server
+#
+  storage-service:
+    image: storage-service
+    ports:
+      - "8091:8091"
+    links:
+      - discovery-server
+    environment:
+      - WAITING_FOR_DEPENDENCE=true
+    depends_on:
+      - discovery-server
+#
+  rating-service:
+    image: rating-service
+    ports:
+      - "8081:8081"
+    links:
+      - discovery-server
+      - config-server
+    environment:
+      - WAITING_FOR_DEPENDENCE=true
+    depends_on:
+      - discovery-server
+      - config-server
+#
+  hackster-service:
+    image: hackster-service
+    ports:
+      - "8082:8082"
+    links:
+      - discovery-server
+      - config-server
+    environment:
+      - WAITING_FOR_DEPENDENCE=true
+    depends_on:
+      - discovery-server
+      - config-server
+#
+  realtor-service:
+    image: realtor-service
+    ports:
+      - "8080:8080"
+    links:
+      - discovery-server
+      - rating-service
+      - hackster-service
+      - storage-service
+    environment:
+      - WAITING_FOR_DEPENDENCE=true
+    depends_on:
+      - discovery-server
+      - rating-service
+      - hackster-service
+      - storage-service
+#
+  client-service:
+    image: client-service
+    ports:
+      - "8083:8083"
+    links:
+      - discovery-server
+    environment:
+      - WAITING_FOR_DEPENDENCE=true
+    depends_on:
+      - discovery-server
+      - storage-service
+#
+  dsl-executor-service:
+    image: dsl-executor-service
+    ports:
+      - "8088:8088"
+    links:
+      - discovery-server
+      - rating-service
+      - hackster-service
+      - storage-service
+    volumes:
+       - ./dsl:/opt/spring-cloud/dsl-scripts
+    environment:
+      - WAITING_FOR_DEPENDENCE=true
+    depends_on:
+      - discovery-server
+      - rating-service
+      - hackster-service
+      - storage-service
+#
+  api-gateway-service:
+    image: api-gateway-service
+    ports:
+      - "8090:8090"
+    links:
+      - discovery-server
+      - realtor-service
+      - client-service
+    environment:
+      - WAITING_FOR_DEPENDENCE=true
+    depends_on:
+      - discovery-server
+      - realtor-service
+      - client-service
+#
+networks:
+  default:
+    driver: bridge

@@ -15,6 +15,8 @@ import org.springframework.web.client.RestTemplate;
 
 import java.util.List;
 
+import javax.annotation.PostConstruct;
+
 @Slf4j
 @RestController
 public class RealtorController {
@@ -28,6 +30,11 @@ public class RealtorController {
     @Autowired
     private StorageServiceClient storageServiceClient;
 
+    @PostConstruct
+    public void warmUp() {
+        storageServiceClient.list();
+    }
+
     @PostMapping("/apartments")
     public void addApartment(@RequestBody ApartmentRecord apartmentRecord) {
         ResponseEntity<Boolean> isHackster =
@@ -37,7 +44,8 @@ public class RealtorController {
     }
 
     @PostMapping("/storeApartments")
-    public void storeApartment(@RequestBody ApartmentRecord apartmentRecord) {
+    @ResponseBody
+    public Apartment storeApartment(@RequestBody ApartmentRecord apartmentRecord) {
 
         Apartment newApartment = Apartment.builder()
             .location(apartmentRecord.getLocation())
@@ -53,6 +61,7 @@ public class RealtorController {
                 .decoder(new JacksonDecoder()).target(ApartmentRecordClient.class, "http://storage-service");
         apartmentRecordClient.storeApartment(apartmentRecord);*/
         log.info("Stored, {}", apartment);
+        return apartment;
     }
 
     @RequestMapping("/service-instances/{applicationName}")
