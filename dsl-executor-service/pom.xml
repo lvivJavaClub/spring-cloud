@@ -3,7 +3,7 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
   <modelVersion>4.0.0</modelVersion>
 
-  <groupId>com.lohika.jclub.dsl.service</groupId>
+  <groupId>com.lohika.jclub.dsl</groupId>
   <artifactId>dsl-executor-service</artifactId>
   <version>0.0.1-SNAPSHOT</version>
   <packaging>jar</packaging>
@@ -28,12 +28,17 @@
 
   <dependencies>
     <dependency>
+      <groupId>com.lohika.jclub.zipkin</groupId>
+      <artifactId>zipkin-server-client</artifactId>
+      <version>0.0.1-SNAPSHOT</version>
+    </dependency>
+    <dependency>
       <groupId>com.lohika.jclub.dsl</groupId>
       <artifactId>dsl-core</artifactId>
       <version>0.0.1-SNAPSHOT</version>
     </dependency>
     <dependency>
-      <groupId>com.lohika.jclub.storage.client</groupId>
+      <groupId>com.lohika.jclub.storage</groupId>
       <artifactId>storage-service-client</artifactId>
       <version>0.0.1-SNAPSHOT</version>
     </dependency>

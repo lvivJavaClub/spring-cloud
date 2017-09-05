@@ -2,6 +2,7 @@ package com.lohika.jclub.integration;
 
 import com.lohika.jclub.storage.client.Apartment;
 
+import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,9 +24,6 @@ public class GetWayIntegrationTest extends BaseIntegrationTest {
   private static final String STORE_APARTMENTS = "http://" + API_GATEWAY_SERVICE +
                                                  "/api/realtor-service/storeApartments";
   private static final String GET_APARTMENTS = "http://" + API_GATEWAY_SERVICE + "/api/client-service/apartments";
-
-  @Autowired
-  private RestTemplate restTemplate;
 
   @BeforeClass
   public static void setUpTests() throws InterruptedException {

@@ -36,12 +36,6 @@
     </dependency>
 
     <dependency>
-      <groupId>com.lohika.jclub.gateway</groupId>
-      <artifactId>api-gateway-service</artifactId>
-      <version>0.0.1-SNAPSHOT</version>
-      <scope>test</scope>
-    </dependency>
-    <dependency>
       <groupId>com.lohika.jclub.storage</groupId>
       <artifactId>storage-service-client</artifactId>
       <version>0.0.1-SNAPSHOT</version>
@@ -57,7 +51,7 @@
     <dependency>
       <groupId>org.testcontainers</groupId>
       <artifactId>testcontainers</artifactId>
-      <version>1.4.2</version>
+      <version>1.4.1</version>
       <scope>test</scope>
     </dependency>
   </dependencies>

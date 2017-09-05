@@ -3,7 +3,7 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
   <modelVersion>4.0.0</modelVersion>
 
-  <groupId>com.lohika.jclub.zipkin.server</groupId>
+  <groupId>com.lohika.jclub.zipkin</groupId>
   <artifactId>zipkin-server</artifactId>
   <version>0.0.1-SNAPSHOT</version>
   <packaging>jar</packaging>
@@ -78,10 +78,10 @@
       <plugin>
         <artifactId>maven-antrun-plugin</artifactId>
         <configuration>
-          <tasks>
+          <target>
             <copy file="${project.build.directory}/${project.build.finalName}.jar"
                   tofile="${project.build.directory}/${project.artifactId}.jar"/>
-          </tasks>
+          </target>
         </configuration>
         <executions>
           <execution>

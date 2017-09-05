@@ -19,10 +19,10 @@ import org.springframework.context.ApplicationContextInitializer;
 import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringRunner;
+import org.springframework.web.client.RestTemplate;
 
 import java.io.IOException;
 
-import javax.annotation.PostConstruct;
 
 import static org.hamcrest.CoreMatchers.notNullValue;
 import static org.hamcrest.MatcherAssert.assertThat;
@@ -42,6 +42,9 @@ public abstract class BaseIntegrationTest {
 
   @Autowired
   protected StorageServiceClient storageServiceClient;
+
+  @Autowired
+  protected RestTemplate restTemplate;
 
   @BeforeClass
   public static void init() {
