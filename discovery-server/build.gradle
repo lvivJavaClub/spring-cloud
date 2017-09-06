@@ -1,0 +1,11 @@
+description = "Discovery server"
+
+jar {
+    baseName = 'discovery-server'
+}
+
+dependencies {
+    compile 'org.springframework.boot:spring-boot-starter-actuator'
+    compile 'org.springframework.cloud:spring-cloud-starter-eureka-server'
+    testCompile 'org.springframework.boot:spring-boot-starter-test'
+}

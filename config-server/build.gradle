@@ -1,0 +1,12 @@
+description = "Configuration server"
+
+jar {
+    baseName = 'config-server'
+}
+
+dependencies {
+    compile 'org.springframework.boot:spring-boot-starter-actuator'
+    compile 'org.springframework.cloud:spring-cloud-config-server'
+    compile 'org.springframework.cloud:spring-cloud-starter-eureka'
+    testCompile 'org.springframework.boot:spring-boot-starter-test'
+}
