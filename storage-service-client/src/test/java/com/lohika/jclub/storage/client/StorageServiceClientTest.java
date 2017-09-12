@@ -28,6 +28,7 @@ public class StorageServiceClientTest {
   @ClassRule
   public static GenericContainer storageService = new GenericContainer("storage-service:latest")
       .withExposedPorts(8091)
+      .withEnv("WAITING_FOR_DEPENDENCE", "false")
       .waitingFor(new LogMessageWaitStrategy().withRegEx(".*Started StorageServiceApplication in.*\\s"));
 
   @Autowired

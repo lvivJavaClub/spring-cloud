@@ -25,8 +25,9 @@
 		<module>realtor-service</module>
 		<module>client-service</module>
 		<module>api-gateway-service</module>
-    <module>integration-test</module>
+		<module>integration-test</module>
 		<module>zipkin-server</module>
 		<module>zipkin-server-client</module>
+		<module>spring-cloud-base-image</module>
 	</modules>
 </project>

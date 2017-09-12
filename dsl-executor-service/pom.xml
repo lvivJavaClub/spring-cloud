@@ -118,6 +118,14 @@
         <groupId>com.spotify</groupId>
         <artifactId>docker-maven-plugin</artifactId>
         <version>1.0.0</version>
+        <dependencies>
+          <dependency>
+            <groupId>com.lohika.jclub.docker</groupId>
+            <artifactId>spring-cloud-base-image</artifactId>
+            <version>0.0.1-SNAPSHOT</version>
+            <type>pom</type>
+          </dependency>
+        </dependencies>
         <executions>
           <execution>
             <id>build-image</id>

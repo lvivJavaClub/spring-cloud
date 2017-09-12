@@ -30,8 +30,7 @@ public class RatingServiceClientTest {
       .withEnv("spring.cloud.config.fail-fast", "false")
       .withEnv("spring.cloud.config.discovery.enabled", "false")
       .withEnv("rate", "100")
-      .withEnv("spring.cloud.config.discovery.enabled", "false")
-      .withEnv("spring.cloud.config.fail-fast", "false")
+      .withEnv("WAITING_FOR_DEPENDENCE", "false")
       .waitingFor(new LogMessageWaitStrategy().withRegEx(".*Started RatingServiceApplication in.*\\s"));
 
   @Autowired

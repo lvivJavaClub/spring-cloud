@@ -7,6 +7,7 @@ import com.netflix.appinfo.InstanceInfo;
 import com.netflix.discovery.EurekaClient;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
@@ -24,6 +25,8 @@ import org.springframework.web.client.RestTemplate;
 
 import java.util.concurrent.Callable;
 
+import static org.apache.commons.lang.StringUtils.isEmpty;
+
 @Log4j
 @Configuration
 public class ZipkinServerConfiguration {
@@ -37,19 +40,15 @@ public class ZipkinServerConfiguration {
   @Autowired
   private ZipkinProperties zipkinProperties;
 
-  @Value(value = "${spring.sleuth.web.skip-pattern:#{null}}")
+  @Value(value = "${spring.sleuth.web.skip-pattern:}")
   private String skipPattern;
 
-  @Value(value = "${spring.sleuth.serverName:#{null}}")
+  @Value(value = "${spring.sleuth.serverName:ZIPKIN-SERVER}")
   private String ziplikServerName;
 
   @Autowired
-  private RestTemplate restTemplate;
-
-  @Bean
-  public RestTemplate restTemplate() {
-    return new RestTemplate();
-  }
+  @Qualifier("zipkinRestTemplate")
+  private RestTemplate zipkinRestTemplate;
 
   @Bean
   @ConditionalOnProperty(value = "spring.sleuth.enabled", havingValue = "true")
@@ -61,16 +60,25 @@ public class ZipkinServerConfiguration {
 
       @Override
       public void report(zipkin.Span span) {
-        InstanceInfo instance = eurekaClient.getNextServerFromEureka(ziplikServerName, false);
-        if (!(baseUrl != null && instance.getHomePageUrl().equals(baseUrl))) {
+        if (baseUrl == null || delegate == null) {
+          InstanceInfo instance = eurekaClient.getNextServerFromEureka(ziplikServerName, false);
+          log.info("InstanceInfo: " + instance);
+
           baseUrl = instance.getHomePageUrl();
-          delegate = new HttpZipkinSpanReporter(restTemplate, baseUrl, zipkinProperties.getFlushInterval(), spanMetricReporter);
-          if (!span.name.matches(skipPattern)) {
-            delegate.report(span);
-          }
+          delegate = new HttpZipkinSpanReporter(zipkinRestTemplate, baseUrl, zipkinProperties.getFlushInterval(), spanMetricReporter);
+        }
+
+        if (isEmpty(skipPattern) || !span.name.matches(skipPattern)) {
+          delegate.report(span);
         }
       }
     };
+  }
+
+  @Bean
+  @Qualifier("zipkinRestTemplate")
+  public RestTemplate zipkinRestTemplate() {
+    return new RestTemplate();
   }
 
   @Bean
@@ -81,13 +89,13 @@ public class ZipkinServerConfiguration {
   }
 
   @Bean
-  @ConditionalOnMissingBean(SpanNamer.class)
+  @ConditionalOnProperty(value = "spring.sleuth.enabled", havingValue = "false")
   public SpanNamer spanNamer() {
     return (object, defaultValue) -> null;
   }
 
   @Bean
-  @ConditionalOnMissingBean(Tracer.class)
+  @ConditionalOnProperty(value = "spring.sleuth.enabled", havingValue = "false")
   public Tracer tracer() {
     return new Tracer() {
       @Override
@@ -112,7 +120,6 @@ public class ZipkinServerConfiguration {
 
       @Override
       public void addTag(String key, String value) {
-
       }
 
       @Override
