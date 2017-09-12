@@ -1,24 +1,23 @@
 #!/bin/bash
 
-WAITING_FOR_DEPENDENCE=${WAITING_FOR_DEPENDENCE:='false'}
-
+WAITING_FOR_DEPENDENCE=${WAITING_FOR_DEPENDENCE:='true'}
 if [ "$WAITING_FOR_DEPENDENCE" != "true" ]; then
     echo "Starting storage server immediately"
     java -jar ./storage-service.jar
     exit 0
 fi
 
+source ./functions.sh
+
 DISCOVERY_SERVER_HOST=${DISCOVERY_SERVER_HOST:='discovery-server'}
 DISCOVERY_SERVER_PORT=${DISCOVERY_SERVER_PORT:=8761}
+waitingForService ${DISCOVERY_SERVER_HOST} ${DISCOVERY_SERVER_PORT}
 
-echo "Trying to connect to discovery server on ${DISCOVERY_SERVER_HOST}:${DISCOVERY_SERVER_PORT}"
-until $(curl --output /dev/null --silent --head --fail "http://${DISCOVERY_SERVER_HOST}:${DISCOVERY_SERVER_PORT}/info"); do
-    echo -e ".\c"
-    sleep 1
-done
-echo
+WAITING_FOR_MONITORING=${WAITING_FOR_MONITORING:='false'}
+if [ "$WAITING_FOR_MONITORING" == "true" ]; then
+    waitingForServiceInDiscovery ${DISCOVERY_SERVER_HOST} ${DISCOVERY_SERVER_PORT} ${ZIPKIN_SERVER:='zipkin-server'}
+fi
 
-sleep 15
 echo "Starting storage server"
 echo "Setting eureka.client.serviceUrl.defaultZone to http://${DISCOVERY_SERVER_HOST}:${DISCOVERY_SERVER_PORT}/eureka"
 echo

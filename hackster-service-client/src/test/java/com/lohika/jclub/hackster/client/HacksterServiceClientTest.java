@@ -28,6 +28,7 @@ public class HacksterServiceClientTest {
       .withEnv("maxAllowedApartmentsPerRealtor", Integer.toString(MAX_ALLOWED_APARTMENTS_PER_REALTOR))
       .withEnv("spring.cloud.config.discovery.enabled", "false")
       .withEnv("spring.cloud.config.fail-fast", "false")
+      .withEnv("WAITING_FOR_DEPENDENCE", "false")
       .waitingFor(new LogMessageWaitStrategy().withRegEx(".*Started HacksterServiceApplication in.*\\s"));
 
   @Autowired

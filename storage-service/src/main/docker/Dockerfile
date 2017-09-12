@@ -1,7 +1,4 @@
-FROM java:8
-
-RUN mkdir -p /opt/spring-cloud
-WORKDIR /opt/spring-cloud
+FROM spring-cloud-base-image
 
 ADD storage-service.jar storage-service.jar
 ADD wrapper.sh wrapper.sh
