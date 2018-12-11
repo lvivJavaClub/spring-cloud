@@ -1,6 +1,7 @@
 package com.lohika.jclub.storage.client;
 
 import org.junit.ClassRule;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,6 +24,7 @@ import static org.junit.Assert.assertThat;
 @RunWith(SpringRunner.class)
 @SpringBootTest(classes = StorageServiceClientTestApplication.class)
 @ContextConfiguration(initializers = StorageServiceClientTest.Initializer.class)
+@Ignore
 public class StorageServiceClientTest {
 
   @ClassRule
@@ -59,6 +61,7 @@ public class StorageServiceClientTest {
   }
 
   @Test
+  @Ignore
   public void create() {
     Apartment actual = storageServiceClient.create(apartment);
 
