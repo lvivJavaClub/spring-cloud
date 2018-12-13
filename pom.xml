@@ -15,7 +15,6 @@
 		<module>config-server</module>
 		<module>dsl</module>
 		<module>dsl-executor-service</module>
-		<module>discovery-server</module>
 		<module>rating-service</module>
 		<module>rating-service-client</module>
 		<module>hackster-service</module>
