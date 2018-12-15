@@ -12,7 +12,6 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-//@EnablePrometheusEndpoint
 public class StatusController {
 
     private final Counter counter = Counter.build()
@@ -21,10 +20,11 @@ public class StatusController {
             .help("All http calls")
             .register();
 
-    @GetMapping("/status/{status}/{content}")
-    public ResponseEntity<String> getStatus(@PathVariable int status, @PathVariable String content) {
+    @GetMapping("/status/{status}")
+    public ResponseEntity<String> getStatus(@PathVariable int status) {
         counter.labels(String.valueOf(status)).inc();
-        return new ResponseEntity<>(content, HttpStatus.resolve(status));
+        HttpStatus httpStatus = HttpStatus.resolve(status);
+        return new ResponseEntity<>(httpStatus.getReasonPhrase(), httpStatus);
     }
 
     @GetMapping("/metrics")
